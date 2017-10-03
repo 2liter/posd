@@ -30,11 +30,18 @@ class Number
         return false;
     }
 
-    bool match(Variable inX)
+    bool match(Variable &X)
     {
-        if( inX.value() == "" ) return true;
-        else return false;
+        X._value = _str;
+        bool ret = X._assignable;
+        if (X._assignable)
+        {
+            X._value = _str;
+            X._assignable = false;
+        }
+        return ret;
     }
+
 
 };
 

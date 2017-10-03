@@ -117,7 +117,7 @@ TEST (Var, matchSuccessToAtomThenFailureToNumber2) {
   Variable X("X");
   tom.match(X);
   Number first(25);
-  EXPECT_TRUE(first.match(X));
+  EXPECT_FALSE(first.match(X));
 }
 //?- X=tom, X=tom.
 //true.
@@ -125,6 +125,7 @@ TEST(Var, reAssignTheSameAtom){
   Variable X("X");
   Atom tom("tom");
   X.match(tom);
-  EXPECT_TRUE(X.match(tom));
+  X.match(tom);
+  ASSERT_EQ(X.value(), "tom");
 }
 #endif
