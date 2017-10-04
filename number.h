@@ -13,12 +13,12 @@ using std::string;
 class Number
 {
   public:
-    Number(double s) ;
-    double _value;
+    Number(int s) ;
+    int _value;
     string _str;
     string value() ;
     string symbol() ;
-    bool match( double s ) ;
+    bool match( int s ) ;
 
     bool match(Atom tom);
 

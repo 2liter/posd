@@ -3,7 +3,7 @@
 #include "number.h"
 using std::string;
 
-Number::Number(double s) : _value(s)
+Number::Number(int s) : _value(s)
 {
     std::ostringstream strs;
     strs << _value;
@@ -11,7 +11,7 @@ Number::Number(double s) : _value(s)
 }
 string Number::value() { return _str; }
 string Number::symbol() { return _str; }
-bool Number::match(double s)
+bool Number::match(int s)
 {
     return s == _value;
 }
