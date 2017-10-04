@@ -4,12 +4,15 @@ INC_DIR = include
 
 all: hw2
 
-hw2: mainTerm.o atom.o variable.o
+hw2: mainTerm.o atom.o variable.o number.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw2 mainTerm.o atom.o variable.o -lgtest
+	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest
 else
-	g++ -o hw2 mainTerm.o atom.o variable.o -lgtest -lpthread
+	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest -lpthread
 endif
+
+number.o: number.cpp number.h atom.h variable.h
+	g++ -std=gnu++0x -c number.cpp
 
 atom.o: atom.cpp number.h atom.h variable.h
 	g++ -std=gnu++0x -c atom.cpp

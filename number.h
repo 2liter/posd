@@ -3,44 +3,26 @@
 
 #include <string>
 #include <sstream>
-#include "variable.h"
-#include "atom.h"
+
+class Variable;
+class Atom;
+
 
 using std::string;
 
 class Number
 {
   public:
-    Number(double s) : _value(s){
-        std::ostringstream strs;
-        strs << _value;
-        _str = strs.str();
-
-     }
+    Number(double s) ;
     double _value;
     string _str;
-    string value() { return _str; }
-    string symbol() { return _str; }
-    bool match( double s ) {
-        return s == _str;
-    }
+    string value() ;
+    string symbol() ;
+    bool match( double s ) ;
 
-    bool match(Atom tom)
-    {
-        return false;
-    }
+    bool match(Atom tom);
 
-    bool match(Variable &X)
-    {
-        X._value = _str;
-        bool ret = X._assignable;
-        if (X._assignable)
-        {
-            X._value = _str;
-            X._assignable = false;
-        }
-        return ret;
-    }
+    bool match(Variable &X);
 
 
 };
