@@ -20,9 +20,9 @@ class Number
     double _value;
     string _str;
     string value() { return _str; }
-    string symbol() { return "Number"; }
+    string symbol() { return _str; }
     bool match( double s ) {
-        return s == _value ;
+        return s == _str;
     }
 
     bool match(Atom tom)

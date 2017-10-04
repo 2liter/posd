@@ -13,7 +13,7 @@ TEST (Number,ctor) {
 //test Number.symbol()
 TEST (Number, symbol) {
     Number first(5);
-    EXPECT_EQ(first.symbol(), "Number");
+    EXPECT_EQ(first.symbol(), "5");
 }
 //?- 25=25.
 //true.
@@ -68,7 +68,6 @@ TEST (Atom, matchSuccessToVarInstantedToDiffConstant) {
     Variable X("X");
     X.match(tom);
     tom.match(X);
-
     ASSERT_EQ(X.value(), "tom");
 }
 
