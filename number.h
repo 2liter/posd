@@ -19,6 +19,7 @@ class Number
     string value() ;
     string symbol() ;
     bool match( int s ) ;
+    bool match(Number number);
 
     bool match(Atom tom);
 

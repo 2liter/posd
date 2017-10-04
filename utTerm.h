@@ -4,7 +4,6 @@
 #include "number.h"
 #include "atom.h"
 #include "variable.h"
-
 //test Number.value()
 TEST (Number,ctor) {
     Number first(6);
@@ -19,13 +18,15 @@ TEST (Number, symbol) {
 //true.
 TEST (Number, matchSuccess) {
     Number first(25);
-    EXPECT_TRUE(first.match(25));
+    Number sec(25);
+    EXPECT_TRUE(first.match(sec));
 }
 //?- 25=0.
 //false.
 TEST (Number, matchFailureDiffValue) {
     Number first(25);
-    EXPECT_FALSE(first.match(0));
+    Number sec(0);
+    EXPECT_FALSE(first.match(sec));
 }
 //?- 25=tom.
 //false.

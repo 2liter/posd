@@ -16,6 +16,12 @@ bool Number::match(int s)
     return s == _value;
 }
 
+bool Number::match(Number number)
+{
+
+    return _str == number.symbol();
+}
+
 bool Number::match(Atom tom)
 {
     return false;
