@@ -71,7 +71,6 @@ TEST (Atom, matchSuccessToVarInstantedToDiffConstant) {
     X.match(tom);
     tom.match(X);
     ASSERT_EQ(X.value(), "tom");
-    EXPECT_TRUE(tom.match(X));
 }
 
 // ?- X=jerry, tom=X.
