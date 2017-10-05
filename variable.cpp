@@ -16,6 +16,11 @@ bool Variable::match(Atom atom)
         _value = atom._symbol;
         _assignable = false;
     }
+    else if (_value == atom._symbol)
+    {
+        return true;
+    }
+
     return ret;
 }
 
@@ -26,6 +31,10 @@ bool Variable::match(Number number)
     {
         _value = number.value();
         _assignable = false;
+    }
+    else if (_value == number.value() )
+    {
+        return true;
     }
     return ret;
 }
