@@ -14,12 +14,19 @@ bool Atom::match(Number math)
 
 bool Atom::match(Variable &X)
 {
-    X._value = Atom::_symbol;
+
+
     bool ret = X._assignable;
     if (X._assignable)
     {
         X._value = _symbol;
         X._assignable = false;
     }
+
+    else if (X.value() == _symbol)
+    {
+        return true;
+    }
+
     return ret;
 }
