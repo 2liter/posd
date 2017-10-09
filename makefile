@@ -11,16 +11,16 @@ else
 	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest -lpthread
 endif
 
-number.o: number.cpp number.h atom.h variable.h
+number.o: number.cpp number.h atom.h variable.h term.h
 	g++ -std=gnu++0x -c number.cpp
 
-atom.o: atom.cpp number.h atom.h variable.h
+atom.o: atom.cpp number.h atom.h variable.h term.h
 	g++ -std=gnu++0x -c atom.cpp
-variable.o: variable.cpp atom.cpp number.h atom.h variable.h
+variable.o: variable.cpp atom.cpp number.h atom.h variable.h term.h
 	g++ -std=gnu++0x -c variable.cpp
 
 	
-mainTerm.o: mainTerm.cpp utTerm.h number.h variable.h atom.h
+mainTerm.o: mainTerm.cpp utTerm.h number.h variable.h atom.h term.h
 	g++ -std=gnu++0x -c mainTerm.cpp
 
 

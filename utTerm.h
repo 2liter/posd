@@ -4,6 +4,7 @@
 #include "number.h"
 #include "atom.h"
 #include "variable.h"
+#include "term.h"
 //test Number.value()
 TEST (Number,ctor) {
     Number first(6);

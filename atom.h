@@ -2,7 +2,7 @@
 #define ATOM_H
 
 #include <string>
-//#include "number.h"
+#include "term.h"
 
 using std::string;
 

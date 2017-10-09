@@ -2,6 +2,7 @@
 #define VARIABLE_H
 
 #include <string>
+#include "term.h"
 
 class Atom;
 class Number;
