@@ -1,9 +1,5 @@
-all: madRace utAtom utVariable hw3
+all: hw3
 
-madRace: mainMadRace.o
-	g++ -o madRace mainMadRace.o -lgtest -lpthread
-mainMadRace.o: mainMadRace.cpp madRace.h utMadRace.h
-	g++ -std=c++11 -c mainMadRace.cpp
 
 hw3: mainAtom.o
 ifeq (${OS}, Windows_NT)
@@ -12,15 +8,8 @@ else
 	g++ -o hw3 mainAtom.o -lgtest -lpthread
 endif
 
-utAtom: mainAtom.o
-	g++ -o utAtom mainAtom.o -lgtest -lpthread
 mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h
 	g++ -std=c++11 -c mainAtom.cpp
-
-utVariable: mainVariable.o
-		g++ -o utVariable mainVariable.o  -lgtest -lpthread
-mainVariable.o: mainVariable.cpp utVariable.h variable.h
-		g++ -std=c++11 -c mainVariable.cpp
 
 #exp: mainExp.o
 #	g++ -o exp mainExp.o -lgtest -lpthread
