@@ -3,7 +3,7 @@
 
 #include <string>
 #include <sstream>
-#include <atom.h>
+#include "atom.h"
 
 class Variable;
 
