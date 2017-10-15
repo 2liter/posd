@@ -26,7 +26,9 @@ TEST (Variable , haveValue){
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){
-
+  Variable X("X");
+  Number first(2.7182);
+  ASSERT_TRUE(X.match(first));
 }
 
 // ?- X=Y, X=1.

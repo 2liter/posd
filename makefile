@@ -9,7 +9,7 @@ else
 	g++ -o hw3 mainAtom.o -lgtest -lpthread
 endif
 
-mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h
+mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h number.h
 	g++ -std=gnu++0x -c mainAtom.cpp
 
 clean:
