@@ -10,7 +10,7 @@ class Variable;
 
 using std::string;
 
-class Number : public Term
+class Number
 {
   public:
     Number(double s) : _value(s)
