@@ -8,8 +8,10 @@ using std::string;
 
 class Variable{
 public:
+  /*
   Variable(string s):_symbol(s){}
   string const _symbol;
+
   string value(){ return _value; }
   bool match( Atom atom ){
     bool ret = _assignable;
@@ -32,7 +34,7 @@ public:
   bool match( Variable X ){
     return true;
   }
-
+*/
 private:
   string _value;
   bool _assignable = true;

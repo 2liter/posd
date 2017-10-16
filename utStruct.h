@@ -1,7 +1,7 @@
 #include <vector>
 #include "atom.h"
 #include "struct.h"
-
+/*
 TEST(Struct, hobby)
 {
   Atom tom("tom");
@@ -88,7 +88,7 @@ TEST(Struct, var_match_atom)
 {
 
 }
-
+*/
 // Given there are Struct s1 and Struct s2
 // When Struct s1 contains Struct s2
 // And Struct s2 contains a Variable X

@@ -12,6 +12,7 @@ using std::string;
 
 class Number
 {
+  /*
   public:
     Number(double s) : _value(s)
     {
@@ -22,7 +23,7 @@ class Number
     double _value;
     string _str;
     string symbol() { return _str; }
-
+*/
 };
 
 #endif 

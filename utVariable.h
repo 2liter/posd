@@ -6,7 +6,7 @@
 #include "atom.h"
 
 
-
+/*
 TEST(Variable, constructor){
   Variable X("X");
   ASSERT_EQ("X", X._symbol);
@@ -77,7 +77,7 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
 
 
 }
-
+*/
 // ?- X=Y, Y=Z, Z=1
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varY_to_varX) {
