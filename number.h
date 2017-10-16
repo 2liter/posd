@@ -3,29 +3,25 @@
 
 #include <string>
 #include <sstream>
-#include "term.h"
+#include "atom.h"
 
 class Variable;
-class Atom;
 
 
 using std::string;
 
-class Number
+class Number : public Term
 {
   public:
-    Number(int s) ;
-    int _value;
+    Number(double s) : _value(s)
+    {
+      std::ostringstream strs;
+      strs << _value;
+      _str = strs.str();
+    }
+    double _value;
     string _str;
-    string value() ;
-    string symbol() ;
-    bool match( int s ) ;
-    bool match(Number number);
-
-    bool match(Atom tom);
-
-    bool match(Variable &X);
-
+    string symbol() { return _str; }
 
 };
 

@@ -1,32 +1,23 @@
 
+all: hw3
 
-INC_DIR = include
 
-all: hw2
-
-hw2: mainTerm.o atom.o variable.o number.o
+hw3: mainAtom.o
 ifeq (${OS}, Windows_NT)
-	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest
+	g++ -o hw3 mainAtom.o -lgtest
 else
-	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest -lpthread
+	g++ -o hw3 mainAtom.o -lgtest -lpthread
 endif
 
-number.o: number.cpp number.h atom.h variable.h term.h
-	g++ -std=gnu++0x -c number.cpp
+mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h number.h
+	g++ -std=gnu++0x -c mainAtom.cpp
 
-atom.o: atom.cpp number.h atom.h variable.h term.h
-	g++ -std=gnu++0x -c atom.cpp
-variable.o: variable.cpp atom.cpp number.h atom.h variable.h term.h
-	g++ -std=gnu++0x -c variable.cpp
-
-	
-mainTerm.o: mainTerm.cpp utTerm.h number.h variable.h atom.h term.h
-	g++ -std=gnu++0x -c mainTerm.cpp
-
-
-clean:	
+clean:
 ifeq (${OS}, Windows_NT)
 	del *.o *.exe
 else
-	rm -f *.o hw2
+	rm -f *.o hw3
 endif
+
+stat:
+	wc *.h *.cpp

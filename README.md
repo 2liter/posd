@@ -1,50 +1,45 @@
-### Pattern Oriented Software Design
-#### Fall, 2017
-#### Prof Y C Cheng
-#### Dept of Computer Science and Information Engineering
-#### Taipei Tech
+# POSD2017F Homework
 
-### Introduction
-We will build a Prolog term matching program in this course. Functionally, the program is simple but non-trivial. Thus, we will have plenty of opportunities to encounter **design problems**. After analyzing the design problems, we will make use of appropriate design patterns to solve them. The patterns include _Composite_, _Interpreter_, _Builder_, _Iterator_, _Proxy_, _Visitor_, and so on. Along the way we will also pick up some useful domain knowledge of computing: symbolic matching, lexical analysis, and parsing.
+## Homework assignment 3
 
-Thus the course requires you to get familiar with matching, the fundamental operation of executing a Prolog program. Due to time limitation, we will focus only on defining terms and performing matches. We build our simplified term matching program after [SWI Prolog](http://www.swi-prolog.org/).
+Please use [the files that were used in course](https://github.com/yccheng66/posd2017f) and copy test header to your repository from this project.
 
-I will be using the following simple way to write C++ programs. My programs (and your programs will, too) come with a makefile that builds it by typing _make_ in bash. We will use the g++ stack. While you are free to code on any OS platform (e.g., Ubuntu, MacOS, and bash on Ubuntu on Windows), your program assignment will be graded on Ubuntu.
+~~And unfortunately, the theft of plagiarism occurred again and again, in order to protect the rights and interests of students, we decided to ask you to move your repository from Github to [Gitlab](https://gitlab.com). Please follow [the steps](https://github.com/posd2017f/homework#setup-gitlab-repository) below to change your repository host.~~
 
-When coding in class, I will use the editor [Atom](https://atom.io), which comes with syntax highlighting, code completion to make coding easy. I will also use the plugin [PlatformIO IDE Terminal](https://atom.io/packages/platformio-ide-terminal) so that we can access a terminal to build programs without leaving Atom.
+:zap: After we discussed with Professor, we decided to remain github host. So if you already created a new gitlab repository, sorry for that.
 
-### Prolog basics - goal, relational goals, Conjunction of goals, disjunction of goals,
+#### Assignment requirement
 
-A _query_ consists of one or more _goal_:
+  1. Need `number.h` and its class implementation `Number`, you can use the previous one(hw2). And the interface of `Number` should follow the code block below:
 
-```prolog
-?- X=1.
-X = 1.
-```
+      ```c++
+      void Number(double value);
+      std::string symbol();
+      std::string value();
+      ```
 
-is a query "is X matchable to 1?" consisting of the relational goal "X=1". The goal "X=1" _succeeded_ (or is _satisfiable_) because variable X matches any legitimate term.
+  2. Implement all tests in `utStrcut.h` and `utVariable.h`. The describe of test have been written on each test.
 
-```prolog
-?- X=1, Y=X.
-X = Y, Y = 1.
-```
+  4. Write the corresponding makefile to generate executable file which named `hw3`. Note that it is the executable name, not the test file name.
 
-is a query "is X matchable to 1 _and_ is Y matchable to X?" that a _conjunction_ of two goals "X=1" and "Y = X". The goal succeeded.
+  5. Make sure your CI jobs are both passed before deadline.
 
+#### Marks
 
-```prolog
-?- X=1, X=2.
-false.
-```
+  You totally have 15 tests in your own, each one is 2 points.
+  And TA's tests totally have 20 tests, each one is 3 points.
+  The sum of this homework is 90 points.
 
-is a query with a _negative_ answer because the conjunction of goals  _failed_ or is _unsatisfiable_.
+#### Deadline
 
-```prolog
-?- X=1; X=2.
-X = 1 ;
-X = 2.
-```
+  Thus Oct 19 2017 23:59:59 
 
-is a query with a _positive_ answer because the disjunctions succeeded in succession. Note that the ";" after "X=1" is typed by the user to query for more answers; the query terminates if the return key is hit.
+#### Note
 
-### Data objects in Prolog
+  * **About project structure**. In pervious homework, some people will place test file into folder and write the corresponding makefile. (e.g. `variable.h` in *include* folder ) This will result the executable in .ut job that still contains your test script but not ours because we just replace the test file at root directory. Thus, the report of test result shows all tests are passed, but in the fact it may isn't. So, if you place your files into some folder, please check the test report in .ut job that test script is still yours or not.
+
+  * Try to read building information in console log and fix the hw problem  by yourself as possible as you can.
+  
+  * If your CI job can not pull your repository, email to us.
+
+#### Change log
