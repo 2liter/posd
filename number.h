@@ -5,14 +5,13 @@
 #include <sstream>
 #include "atom.h"
 
-class Variable;
 
 
 using std::string;
 
-class Number
-{
-  /*
+
+
+class Number : public Term{
   public:
     Number(double s) : _value(s)
     {
@@ -22,8 +21,8 @@ class Number
     }
     double _value;
     string _str;
-    string symbol() { return _str; }
-*/
+    string symbol() const{ return _str; }
+
 };
 
 #endif 

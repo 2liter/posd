@@ -24,7 +24,6 @@ public:
 
 class Atom : public Term{
 public:
-  /*
   Atom (string s):_symbol(s) {}
 
   string symbol() const{
@@ -32,7 +31,6 @@ public:
   }
 
   string _symbol;
-  */
 };
 
 
