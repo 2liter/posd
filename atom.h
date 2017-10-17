@@ -27,8 +27,7 @@ public:
   Atom (string s);
 
   string symbol() const;
-  bool match(Term & term);
-
+  //bool match(Term & term);
 
   string _symbol;
 };

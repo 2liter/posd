@@ -35,31 +35,32 @@ public:
     string ret =_name.symbol() + "(";
     for(int i = 0; i < _args.size() - 1 ; i++){
       Variable * ps = dynamic_cast<Variable *>(_args[i]);
-      if(ps) ret += _args[i]-> value() + ", ";
+      if(ps) ret += ps->value() + ", ";
       else ret += _args[i]-> symbol() + ", ";
+      ps = NULL ;
     }
-    Variable * ps = dynamic_cast<Variable *>(_args[_args.size()-1]);
-    if(ps) {
-      //std::cout << _args[_args.size()-1]-> value() ;
-      ret += _args[_args.size()-1]-> value() + ")";
+    Variable * ps1 = dynamic_cast<Variable *>(_args[_args.size()-1]);
+    if(ps1) {
+      //std::cout << ps1->value() ;
+      ret +=  ps1->value()+ ")";
     }
     else  ret += _args[_args.size()-1]-> symbol() + ")";
-    
+    ps1 = NULL ;
 
     return  ret;
   }
   bool match(Term &term){
-    Struct * ps = dynamic_cast<Struct *>(&term);
-    if (ps){
+    Struct * ps_struct = dynamic_cast<Struct *>(&term);
+    if (ps_struct){
 
-      if (!_name.match(ps->_name))
+      if (!_name.match(ps_struct->_name))
         return false;
 
-      if(_args.size()!= ps->_args.size())
+      if(_args.size()!= ps_struct->_args.size())
         return false;
 
       for(int i=0;i<_args.size();i++){
-        if(_args[i]->symbol() != ps->_args[i]->symbol())
+        if(_args[i]->symbol() != ps_struct->_args[i]->symbol())
             return false;
 
       }

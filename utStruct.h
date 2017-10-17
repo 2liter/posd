@@ -55,14 +55,14 @@ TEST(Struct, match3){
 
 TEST(Struct, match4)
 {
-  /*
+  
   Atom tom("tom");
   Atom chaseMouse("chaseMouse");
   std::vector<Term *> v = {&tom, &chaseMouse};
   Struct hobby(Atom("hobby"), v);
   Struct hobby2(Atom("hobby"), v);
   EXPECT_TRUE(hobby.match(hobby2));
-  */
+  
 }
 
 TEST(Struct, match5)
@@ -93,7 +93,7 @@ TEST(Struct, var)
 // and #value() should also return "s(tom)"
 TEST(Struct, var_match_atom)
 {
-  /*
+  
   Atom s("s");
   Atom tom("tom");
   Variable X("X");
@@ -101,7 +101,7 @@ TEST(Struct, var_match_atom)
   std::vector<Term *> v = {&X};
   Struct hobby(s, v);
   ASSERT_EQ("s(tom)",hobby.value());
-  */
+  
 
 }
 

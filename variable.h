@@ -22,9 +22,12 @@ public:
     if (atom_ps) {
       bool ret = _assignable;
       if (_assignable){
+
         _value = atom_ps->symbol();
         _assignable = false;
       }
+  
+      atom_ps = NULL ;
       return ret;
     }
 
@@ -37,12 +40,14 @@ public:
         _value = num_ps->symbol();
         _assignable = false;
       }
+      num_ps = NULL ;
       return ret;
     }
 
     Variable *var_ps = dynamic_cast<Variable *>(&term);
     if (var_ps)
     {
+      var_ps = NULL;
       return true;
     }
 
