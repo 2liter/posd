@@ -26,7 +26,7 @@ public:
         _value = atom_ps->symbol();
         _assignable = false;
       }
-  
+      
       atom_ps = NULL ;
       return ret;
     }
