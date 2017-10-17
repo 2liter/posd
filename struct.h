@@ -55,11 +55,12 @@ public:
 
       if (!_name.match(ps_struct->_name))
         return false;
-
+      //std::cout << ".." <<_name.match(ps_struct->_name) << "\n";
       if(_args.size()!= ps_struct->_args.size())
         return false;
-
+      //std::cout << _args.size() << ".." <<ps_struct->_args.size() << "\n";
       for(int i=0;i<_args.size();i++){
+        //std::cout << _args[i]->symbol() << ".." <<ps_struct->_args[i]->symbol() << "\n";
         if(_args[i]->symbol() != ps_struct->_args[i]->symbol())
             return false;
 
