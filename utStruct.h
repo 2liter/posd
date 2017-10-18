@@ -112,7 +112,12 @@ TEST(Struct, var_match_atom)
 // and #value() of s1 should also return "s1(s2(X))"
 TEST(Struct, nested_struct1)
 {
-
+  Variable X("X");
+  std::vector<Term *> v1 = {&X};
+  Struct s2(Atom("s2"), v1);
+  std::vector<Term *> v = {&s2};
+  Struct s1(Atom("s1"), v);
+  ASSERT_EQ("s1(s2(X))",s1.value());
 }
 
 // Given there are Struct s1 contains Struct s2
@@ -122,7 +127,14 @@ TEST(Struct, nested_struct1)
 // and #value() of s1 should return "s1(s2(tom))"
 TEST(Struct, nested_struct2)
 {
-
+  Variable X("X");
+  std::vector<Term *> v1 = {&X};
+  Struct s2(Atom("s2"), v1);
+  std::vector<Term *> v = {&s2};
+  Struct s1(Atom("s1"), v);
+  Atom tom("tom");
+  X.match(tom);
+  ASSERT_EQ("s1(s2(X))",s1.value());
 }
 
 // Given there are Struct s1 contains Struct s2

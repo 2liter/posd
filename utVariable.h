@@ -20,11 +20,11 @@ TEST(Variable , matching){
 }
 
 TEST(Variable , atom_to_varX){
-  /*
+  
   Atom tom("tom");
   Variable X("X");
   ASSERT_TRUE(tom.match(X));
-  */
+  
 }
 
 
@@ -39,11 +39,11 @@ TEST (Variable , haveValue){
 // ?- X=2.7182.
 // X=2.7182
 TEST(Variable , numE_to_varX){
-  /*
+  
   Variable X("X");
   Number e(2.7182);
   ASSERT_TRUE(e.match(X));
-  */
+  
 }
 
 // ?- X=Y, X=1.

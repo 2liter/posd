@@ -4,6 +4,7 @@
 #include <string>
 #include "atom.h"
 #include "number.h"
+
 #include <iostream>
 using std::string;
 

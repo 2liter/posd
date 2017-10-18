@@ -13,7 +13,7 @@ mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h number.h
 	g++ -std=gnu++0x -c mainAtom.cpp
 
 	
-atom.o: atom.cpp atom.h
+atom.o: atom.cpp atom.h variable.h number.h
 	g++ -std=gnu++0x -c atom.cpp
 
 #variable.o: variable.cpp atom.h number.h variable.h
