@@ -178,6 +178,20 @@ TEST(Struct, nested_struct3)
 // and #value() of s1 should return "s1(s2(kent_beck), kent_beck)"
 TEST(Struct, nested_struct_and_multiVariable)
 {
+  Atom s1("s1");
+  Atom s2("s2");
+  Atom kent_beck("kent_beck");
+
+  Variable X("X");
+  Variable Y("Y");
+  std::vector<Term *> v = {&Y};
+  Struct hobby2(s2, v);
+  std::vector<Term *> v1 = {&hobby2,&X};
+  Struct hobby1(s1, v1);
+  X.match(Y);
+  X.match(kent_beck);
+  EXPECT_EQ("s1(s2(Y), X)",hobby1.symbol());
+  EXPECT_EQ("s1(s2(kent_beck), kent_beck)",hobby1.value());
 
 }
 

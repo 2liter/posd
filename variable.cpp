@@ -17,16 +17,17 @@ using std::string;
   }
   bool Variable::match(Term &term){
     
-    //Atom *atom_ps = dynamic_cast<Atom *>(&term);
-    if (term.getType() == "Atom") {
+    Atom *atom_ps = dynamic_cast<Atom *>(&term);
+    if (atom_ps) {
       bool ret = _assignable;
       if (_assignable){
+        if (Y) Y->_value = atom_ps->symbol();
 
-        _value = term.symbol();
+        _value = atom_ps->symbol();
         _assignable = false;
       }
       
-      //atom_ps = NULL ;
+      atom_ps = NULL ;
       return ret;
     }
 

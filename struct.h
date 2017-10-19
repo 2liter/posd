@@ -73,20 +73,6 @@ public:
       }
       return true;
     }
-/*
-    Variable * ps = dynamic_cast<Variable *>(&term);
-    if (ps){
-      if (!_name.match(ps->_name))
-        return false;
-      if(_args.size()!= ps->_args.size())
-        return false;
-      for(int i=0;i<_args.size();i++){
-        if(_args[i]->symbol() != ps->_args[i]->symbol())
-            return false;
-      }
-      return true;
-    }
-*/
 
 
     return false;
