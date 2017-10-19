@@ -131,7 +131,7 @@ TEST(Struct, nested_struct1)
 // and #value() of s1 should return "s1(s2(tom))"
 TEST(Struct, nested_struct2)
 {
-  /*
+  
   Atom s1("s1");
   Atom s2("s2");
   Atom tom("tom");
@@ -139,9 +139,10 @@ TEST(Struct, nested_struct2)
   X.match(tom);
   std::vector<Term *> v = {&X};
   Struct hobby2(s2, v);
-  Struct hobby1(s1, hobby2);
+  std::vector<Term *> v1 = {&hobby2};
+  Struct hobby1(s1, v1);
   ASSERT_EQ("s1(s2(tom))",hobby1.value());
-  */
+  
 
 }
 

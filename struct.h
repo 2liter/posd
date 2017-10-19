@@ -12,8 +12,7 @@ using std::string;
 class Struct:public Term
 {
 public:
-  Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) {
-  }
+  Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) { }
 
 
 
@@ -37,17 +36,22 @@ public:
     string ret =_name.symbol() + "(";
     for(int i = 0; i < _args.size() - 1 ; i++){
       Variable * ps = dynamic_cast<Variable *>(_args[i]);
+      Struct * ps1 = dynamic_cast<Struct *>(_args[i]);
       if(ps) ret += ps->value() + ", ";
+      else if(ps1) ret += ps->value() + ", ";
       else ret += _args[i]-> symbol() + ", ";
       ps = NULL ;
+      ps1 = NULL;
     }
-    Variable * ps1 = dynamic_cast<Variable *>(_args[_args.size()-1]);
-    if(ps1) {
-      //std::cout << ps1->value() ;
-      ret +=  ps1->value()+ ")";
+    Variable * ps = dynamic_cast<Variable *>(_args[_args.size()-1]);
+    Struct * ps1 = dynamic_cast<Struct *>(_args[_args.size()-1]);
+    if(ps) {
+      //std::cout << ps->value() ;
+      ret +=  ps->value()+ ")";
     }
+    else if (ps1)ret += _args[_args.size()-1]->value() + ")";
     else  ret += _args[_args.size()-1]-> symbol() + ")";
-    ps1 = NULL ;
+    ps = NULL ;
 
     return  ret;
   }

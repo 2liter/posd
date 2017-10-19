@@ -16,8 +16,7 @@ TEST(Variable, constructor){
 TEST(Variable , matching){
   Atom tom("tom");
   Variable X("X");
-  X.match(tom);
-  ASSERT_EQ("tom", X.value());
+  ASSERT_TRUE(X.match(tom));
 }
 
 TEST(Variable , atom_to_varX){
