@@ -58,6 +58,7 @@ using std::string;
     Struct *Struct_ps = dynamic_cast<Struct *>(&term);
     if (Struct_ps)
     {
+      if (Y) Y->_value = Struct_ps->value();
       _value = Struct_ps->value();
       Struct_ps = NULL;
       return true;

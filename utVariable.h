@@ -131,10 +131,13 @@ TEST (Variable, Struct2) {
   Variable X("X");
   std::vector<Term *> v = {&X};
   Struct hobby(s, v);
-  Atom teddy("teddy");
-  X.match(teddy);
+
   Variable Y("Y");
   Y.match(hobby);
+
+  Atom teddy("teddy");
+  X.match(teddy);
+
 
   ASSERT_EQ("s(teddy)",Y.value());
   
