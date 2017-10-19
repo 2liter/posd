@@ -11,7 +11,9 @@ using std::string;
   Variable::Variable(string s):_symbol(s){
     _value = _symbol;
   }
-  string Variable::value() const{ return _value; }
+  string Variable::value() const{ 
+    return _value; 
+  }
   string Variable::symbol() const{
     return _symbol;
   }
@@ -37,7 +39,9 @@ using std::string;
       bool ret = _assignable;
       if (_assignable)
       {
-        if (Y) Y->_value = num_ps->symbol();
+        if (Y) {
+          Y->_value = num_ps->symbol();
+        }
         _value = num_ps->symbol();
         _assignable = false;
       }
@@ -48,8 +52,11 @@ using std::string;
     Variable *var_ps = dynamic_cast<Variable *>(&term);
     if (var_ps)
     {
+
       Y = var_ps;
       var_ps->Y = this;
+
+
       _value = var_ps->value();
       var_ps = NULL;
       return true;

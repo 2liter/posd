@@ -94,7 +94,18 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
 // ?- X=Y, Y=Z, Z=1
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varY_to_varX) {
-
+  /*
+  Variable X("X");
+  Variable Y("Y");
+  Variable Z("Z");
+  Number first(1);
+  X.match(Y);
+  Y.match(Z);
+  Z.match(first);
+  EXPECT_EQ(X.value(), "1");
+  EXPECT_EQ(Y.value(), "1");
+  EXPECT_EQ(Z.value(), "1");
+  */
 }
 
 // ?- X=Y, X=Z, Z=1
@@ -131,13 +142,12 @@ TEST (Variable, Struct2) {
   Variable X("X");
   std::vector<Term *> v = {&X};
   Struct hobby(s, v);
-
+  
   Variable Y("Y");
-  Y.match(hobby);
-
   Atom teddy("teddy");
   X.match(teddy);
 
+  Y.match(hobby);
 
   ASSERT_EQ("s(teddy)",Y.value());
   
