@@ -65,9 +65,9 @@ TEST (Variable, varY_to_varX_and_num1_to_varY) {
   Variable X("X");
   Variable Y("Y");
   Number first(1);
-  //X.match(Y);
-  //Y.match(first);
-  //ASSERT_EQ(X.value(), "1");
+  X.match(Y);
+  Y.match(first);
+  ASSERT_EQ(X.value(), "1");
 }
 
 // ?- X=X, X=1.
@@ -76,6 +76,7 @@ TEST (Variable, varX_match_varX_and_num1_to_varX) {
   Variable X("X");
   Number first(1);
   X.match(X);
+  
   ASSERT_TRUE(X.match(first));
 }
 

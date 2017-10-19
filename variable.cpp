@@ -47,6 +47,7 @@ using std::string;
     if (var_ps)
     {
       Y = var_ps;
+      var_ps->Y = this;
       _value = var_ps->value();
       var_ps = NULL;
       return true;
