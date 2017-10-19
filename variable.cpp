@@ -24,7 +24,12 @@ using std::string;
     if (atom_ps) {
       bool ret = _assignable;
       if (_assignable){
-        if (Y) Y->_value = atom_ps->symbol();
+        Variable *temp ;
+        temp = Y;
+        while (temp && temp != this ) {
+          temp->_value = atom_ps->symbol();
+          temp = temp->Y;
+        }
 
         _value = atom_ps->symbol();
         _assignable = false;
@@ -75,6 +80,7 @@ using std::string;
     if (Struct_ps)
     {
       if (Y) Y->_value = Struct_ps->value();
+  
       _value = Struct_ps->value();
       Struct_ps = NULL;
       return true;
