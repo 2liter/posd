@@ -1,6 +1,7 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 
+#include <vector>
 #include <string>
 #include "atom.h"
 #include <iostream>
@@ -18,6 +19,7 @@ public:
 
 private:
   Variable *Y = 0;
+  std::vector<Variable *> XYZ;
   string _value;
   bool _assignable = true;
 

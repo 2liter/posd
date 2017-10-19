@@ -5,6 +5,7 @@
 #include "atom.h"
 #include "number.h"
 #include <iostream>
+#include <vector>
 using std::string;
 
 
@@ -39,8 +40,11 @@ using std::string;
       bool ret = _assignable;
       if (_assignable)
       {
-        if (Y) {
-          Y->_value = num_ps->symbol();
+        Variable *temp ;
+        temp = Y;
+        while (temp && temp != this ) {
+          temp->_value = num_ps->symbol();
+          temp = temp->Y;
         }
         _value = num_ps->symbol();
         _assignable = false;
@@ -52,10 +56,15 @@ using std::string;
     Variable *var_ps = dynamic_cast<Variable *>(&term);
     if (var_ps)
     {
+      if(Y){
+        var_ps->Y = Y;
+        Y = var_ps;
+      }
+      else {
 
-      Y = var_ps;
-      var_ps->Y = this;
-
+        Y = var_ps;
+        var_ps->Y = this;
+      }
 
       _value = var_ps->value();
       var_ps = NULL;
