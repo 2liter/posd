@@ -1,0 +1,1100 @@
+diff --git a/.gitignore b/.gitignore
+deleted file mode 100644
+index dc71ebb..0000000
+--- a/.gitignore
++++ /dev/null
+@@ -1,33 +0,0 @@
+-# Prerequisites
+-*.d
+-
+-# Compiled Object files
+-*.slo
+-*.lo
+-*.o
+-*.obj
+-
+-# Precompiled Headers
+-*.gch
+-*.pch
+-
+-# Compiled Dynamic libraries
+-*.so
+-*.dylib
+-*.dll
+-
+-# Fortran module files
+-*.mod
+-*.smod
+-
+-# Compiled Static libraries
+-*.lai
+-*.la
+-*.a
+-*.lib
+-
+-# Executables
+-*.exe
+-*.out
+-*.app
+-.vscode/
+diff --git a/LICENSE b/LICENSE
+deleted file mode 100644
+index adef095..0000000
+--- a/LICENSE
++++ /dev/null
+@@ -1,21 +0,0 @@
+-MIT License
+-
+-Copyright (c) 2017 Fa
+-
+-Permission is hereby granted, free of charge, to any person obtaining a copy
+-of this software and associated documentation files (the "Software"), to deal
+-in the Software without restriction, including without limitation the rights
+-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+-copies of the Software, and to permit persons to whom the Software is
+-furnished to do so, subject to the following conditions:
+-
+-The above copyright notice and this permission notice shall be included in all
+-copies or substantial portions of the Software.
+-
+-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+-SOFTWARE.
+diff --git a/README.md b/README.md
+index 12505c1..f6e9036 100644
+--- a/README.md
++++ b/README.md
+@@ -1,50 +1,45 @@
+-### Pattern Oriented Software Design
+-#### Fall, 2017
+-#### Prof Y C Cheng
+-#### Dept of Computer Science and Information Engineering
+-#### Taipei Tech
++# POSD2017F Homework
+ 
+-### Introduction
+-We will build a Prolog term matching program in this course. Functionally, the program is simple but non-trivial. Thus, we will have plenty of opportunities to encounter **design problems**. After analyzing the design problems, we will make use of appropriate design patterns to solve them. The patterns include _Composite_, _Interpreter_, _Builder_, _Iterator_, _Proxy_, _Visitor_, and so on. Along the way we will also pick up some useful domain knowledge of computing: symbolic matching, lexical analysis, and parsing.
++## Homework assignment 3
+ 
+-Thus the course requires you to get familiar with matching, the fundamental operation of executing a Prolog program. Due to time limitation, we will focus only on defining terms and performing matches. We build our simplified term matching program after [SWI Prolog](http://www.swi-prolog.org/).
++Please use [the files that were used in course](https://github.com/yccheng66/posd2017f) and copy test header to your repository from this project.
+ 
+-I will be using the following simple way to write C++ programs. My programs (and your programs will, too) come with a makefile that builds it by typing _make_ in bash. We will use the g++ stack. While you are free to code on any OS platform (e.g., Ubuntu, MacOS, and bash on Ubuntu on Windows), your program assignment will be graded on Ubuntu.
++~~And unfortunately, the theft of plagiarism occurred again and again, in order to protect the rights and interests of students, we decided to ask you to move your repository from Github to [Gitlab](https://gitlab.com). Please follow [the steps](https://github.com/posd2017f/homework#setup-gitlab-repository) below to change your repository host.~~
+ 
+-When coding in class, I will use the editor [Atom](https://atom.io), which comes with syntax highlighting, code completion to make coding easy. I will also use the plugin [PlatformIO IDE Terminal](https://atom.io/packages/platformio-ide-terminal) so that we can access a terminal to build programs without leaving Atom.
++:zap: After we discussed with Professor, we decided to remain github host. So if you already created a new gitlab repository, sorry for that.
+ 
+-### Prolog basics - goal, relational goals, Conjunction of goals, disjunction of goals,
++#### Assignment requirement
+ 
+-A _query_ consists of one or more _goal_:
++  1. Need `number.h` and its class implementation `Number`, you can use the previous one(hw2). And the interface of `Number` should follow the code block below:
+ 
+-```prolog
+-?- X=1.
+-X = 1.
+-```
++      ```c++
++      void Number(double value);
++      std::string symbol();
++      std::string value();
++      ```
+ 
+-is a query "is X matchable to 1?" consisting of the relational goal "X=1". The goal "X=1" _succeeded_ (or is _satisfiable_) because variable X matches any legitimate term.
++  2. Implement all tests in `utStrcut.h` and `utVariable.h`. The describe of test have been written on each test.
+ 
+-```prolog
+-?- X=1, Y=X.
+-X = Y, Y = 1.
+-```
++  4. Write the corresponding makefile to generate executable file which named `hw3`. Note that it is the executable name, not the test file name.
+ 
+-is a query "is X matchable to 1 _and_ is Y matchable to X?" that a _conjunction_ of two goals "X=1" and "Y = X". The goal succeeded.
++  5. Make sure your CI jobs are both passed before deadline.
+ 
++#### Marks
+ 
+-```prolog
+-?- X=1, X=2.
+-false.
+-```
++  You totally have 15 tests in your own, each one is 2 points.
++  And TA's tests totally have 20 tests, each one is 3 points.
++  The sum of this homework is 90 points.
+ 
+-is a query with a _negative_ answer because the conjunction of goals  _failed_ or is _unsatisfiable_.
++#### Deadline
+ 
+-```prolog
+-?- X=1; X=2.
+-X = 1 ;
+-X = 2.
+-```
++  Thus Oct 19 2017 23:59:59 
+ 
+-is a query with a _positive_ answer because the disjunctions succeeded in succession. Note that the ";" after "X=1" is typed by the user to query for more answers; the query terminates if the return key is hit.
++#### Note
+ 
+-### Data objects in Prolog
++  * **About project structure**. In pervious homework, some people will place test file into folder and write the corresponding makefile. (e.g. `variable.h` in *include* folder ) This will result the executable in .ut job that still contains your test script but not ours because we just replace the test file at root directory. Thus, the report of test result shows all tests are passed, but in the fact it may isn't. So, if you place your files into some folder, please check the test report in .ut job that test script is still yours or not.
++
++  * Try to read building information in console log and fix the hw problem  by yourself as possible as you can.
++  
++  * If your CI job can not pull your repository, email to us.
++
++#### Change log
+diff --git a/atom.cpp b/atom.cpp
+deleted file mode 100644
+index d6e1a20..0000000
+--- a/atom.cpp
++++ /dev/null
+@@ -1,32 +0,0 @@
+-#include "number.h"
+-#include "variable.h"
+-#include "atom.h"
+-
+-using std::string;
+-
+-Atom::Atom(string s) : _symbol(s) {}
+-bool Atom::operator==(Atom a) { return _symbol == a._symbol; }
+-bool Atom::match(Number math)
+-{
+-    math.value();
+-    return false;
+-}
+-
+-bool Atom::match(Variable &X)
+-{
+-
+-
+-    bool ret = X._assignable;
+-    if (X._assignable)
+-    {
+-        X._value = _symbol;
+-        X._assignable = false;
+-    }
+-
+-    else if (X.value() == _symbol)
+-    {
+-        return true;
+-    }
+-
+-    return ret;
+-}
+diff --git a/atom.h b/atom.h
+index 0ae87e4..4cea59b 100644
+--- a/atom.h
++++ b/atom.h
+@@ -2,24 +2,40 @@
+ #define ATOM_H
+ 
+ #include <string>
++<<<<<<< HEAD
+ #include "term.h"
++=======
++>>>>>>> origin/master
+ 
+ using std::string;
+ 
+-class Number;
+-class Variable;
+ 
+-class Atom
+-{
++class Term{
++
+ public:
+-  Atom(string s);
+-  bool operator==(Atom a);
++  virtual string symbol() const= 0;
++
++  virtual string value() const{
++    return symbol();
++  };
++
++  virtual bool match(Term & term) {
++    return symbol() == term.symbol();
++  }
++
++
++};
++
++class Atom : public Term{
++public:
++  Atom (string s):_symbol(s) {}
++
++  string symbol() const{
++    return _symbol;
++  }
++
+   string _symbol;
++};
+ 
+-  bool match(Variable &X);
+-  bool match(Number math);
+-  string value();
+-}
+-;
+ 
+ #endif
+diff --git a/hw2 b/hw2
+deleted file mode 100644
+index 801d776..0000000
+Binary files a/hw2 and /dev/null differ
+diff --git a/hw3 b/hw3
+new file mode 100644
+index 0000000..4581995
+Binary files /dev/null and b/hw3 differ
+diff --git a/madRace.h b/madRace.h
+deleted file mode 100644
+index ec7994d..0000000
+--- a/madRace.h
++++ /dev/null
+@@ -1,29 +0,0 @@
+-#ifndef MADRACE_H
+-#define MADRACE_H
+-
+-class MadCar {
+-public:
+-  MadCar (int iniSpeed): _speed(iniSpeed){}
+-  int speed() const {return _speed;}
+-  void boom(int incSpeed) {_speed+=incSpeed;}
+-private:
+-  int _speed;
+-};
+-
+-class MadBike {
+-public:
+-  MadBike (int iniSpeed, int inc, int maxSpeed): _speed(iniSpeed), _inc(inc), _maxSpeed(maxSpeed){}
+-  int speed() const {return _speed;}
+-  void boom() {
+-    if (_speed +_inc >= _maxSpeed)
+-      throw std::string("MadBike speeding");
+-    else
+-      _speed += _inc;
+-  }
+-private:
+-  int _speed;
+-  int _inc;
+-  int _maxSpeed;
+-};
+-
+-#endif
+diff --git a/mainAtom.cpp b/mainAtom.cpp
+index f4daecb..7dfa998 100644
+--- a/mainAtom.cpp
++++ b/mainAtom.cpp
+@@ -1,5 +1,6 @@
+ #include <gtest/gtest.h>
+-#include "utAtom.h"
++#include "variable.h"
++#include "utStruct.h"
+ 
+ int main( int argc , char **argv )
+ {
+diff --git a/mainMadRace.cpp b/mainMadRace.cpp
+deleted file mode 100644
+index a027a74..0000000
+--- a/mainMadRace.cpp
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#include <gtest/gtest.h>
+-#include "utMadRace.h"
+-
+-int main( int argc , char **argv )
+-{
+-    testing :: InitGoogleTest( &argc , argv ) ;
+-    return RUN_ALL_TESTS( ) ;
+-}
+diff --git a/mainTerm.cpp b/mainTerm.cpp
+deleted file mode 100644
+index 3ca5225..0000000
+--- a/mainTerm.cpp
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#include <gtest/gtest.h>
+-#include "utTerm.h"
+-
+-int main(int argc, char **argv)
+-{
+-    testing::InitGoogleTest(&argc, argv);
+-    return RUN_ALL_TESTS();
+-}
+\ No newline at end of file
+diff --git a/mainVariable.cpp b/mainVariable.cpp
+deleted file mode 100644
+index db15954..0000000
+--- a/mainVariable.cpp
++++ /dev/null
+@@ -1,8 +0,0 @@
+-#include <gtest/gtest.h>
+-#include "utVariable.h"
+-
+-int main( int argc , char **argv )
+-{
+-    testing :: InitGoogleTest( &argc , argv ) ;
+-    return RUN_ALL_TESTS( ) ;
+-}
+diff --git a/makefile b/makefile
+index 3988f38..49401ac 100644
+--- a/makefile
++++ b/makefile
+@@ -1,16 +1,15 @@
+ 
++all: hw3
+ 
+-INC_DIR = include
+ 
+-all: hw2
+-
+-hw2: mainTerm.o atom.o variable.o number.o
++hw3: mainAtom.o
+ ifeq (${OS}, Windows_NT)
+-	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest
++	g++ -o hw3 mainAtom.o -lgtest
+ else
+-	g++ -o hw2 mainTerm.o atom.o variable.o number.o -lgtest -lpthread
++	g++ -o hw3 mainAtom.o -lgtest -lpthread
+ endif
+ 
++<<<<<<< HEAD
+ number.o: number.cpp number.h atom.h variable.h term.h
+ 	g++ -std=gnu++0x -c number.cpp
+ 
+@@ -22,11 +21,17 @@ variable.o: variable.cpp atom.cpp number.h atom.h variable.h term.h
+ 	
+ mainTerm.o: mainTerm.cpp utTerm.h number.h variable.h atom.h term.h
+ 	g++ -std=gnu++0x -c mainTerm.cpp
++=======
++mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h number.h
++	g++ -std=gnu++0x -c mainAtom.cpp
++>>>>>>> origin/master
+ 
+-
+-clean:	
++clean:
+ ifeq (${OS}, Windows_NT)
+ 	del *.o *.exe
+ else
+-	rm -f *.o hw2
++	rm -f *.o hw3
+ endif
++
++stat:
++	wc *.h *.cpp
+diff --git a/number.cpp b/number.cpp
+deleted file mode 100644
+index dfa946f..0000000
+--- a/number.cpp
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#include "variable.h"
+-#include "atom.h"
+-#include "number.h"
+-using std::string;
+-
+-Number::Number(int s) : _value(s)
+-{
+-    std::ostringstream strs;
+-    strs << _value;
+-    _str = strs.str();
+-}
+-string Number::value() { return _str; }
+-string Number::symbol() { return _str; }
+-bool Number::match(int s)
+-{
+-    return s == _value;
+-}
+-
+-bool Number::match(Number number)
+-{
+-
+-    return _str == number.symbol();
+-}
+-
+-bool Number::match(Atom tom)
+-{
+-    return false;
+-}
+-
+-bool Number::match(Variable &X)
+-{
+-    X._value = _str;
+-    bool ret = X._assignable;
+-    if (X._assignable)
+-    {
+-        X._value = _str;
+-        X._assignable = false;
+-    }
+-    return ret;
+-}
+diff --git a/number.h b/number.h
+index c8f97aa..49c19ff 100644
+--- a/number.h
++++ b/number.h
+@@ -3,29 +3,29 @@
+ 
+ #include <string>
+ #include <sstream>
++<<<<<<< HEAD
+ #include "term.h"
++=======
++#include "atom.h"
++>>>>>>> origin/master
+ 
+ class Variable;
+-class Atom;
+ 
+ 
+ using std::string;
+ 
+-class Number
++class Number : public Term
+ {
+   public:
+-    Number(int s) ;
+-    int _value;
++    Number(double s) : _value(s)
++    {
++      std::ostringstream strs;
++      strs << _value;
++      _str = strs.str();
++    }
++    double _value;
+     string _str;
+-    string value() ;
+-    string symbol() ;
+-    bool match( int s ) ;
+-    bool match(Number number);
+-
+-    bool match(Atom tom);
+-
+-    bool match(Variable &X);
+-
++    string symbol() { return _str; }
+ 
+ };
+ 
+diff --git a/struct.h b/struct.h
+new file mode 100644
+index 0000000..d2841a0
+--- /dev/null
++++ b/struct.h
+@@ -0,0 +1,51 @@
++#ifndef STRUCT_H
++#define STRUCT_H
++
++#include "atom.h"
++#include <vector>
++#include <string>
++
++using std::string;
++
++class Struct:public Term
++{
++public:
++  Struct(Atom const & name, std::vector<Term *> args):_name(name), _args(args) {
++  }
++
++  Term * args(int index) {
++    return _args[index];
++  }
++
++  Atom const & name() {
++    return _name;
++  }
++  string symbol() const{
++    string ret =_name.symbol() + "(";
++    for(int i = 0; i < _args.size() - 1 ; i++){
++      ret += _args[i]-> symbol() + ", ";
++    }
++    ret += _args[_args.size()-1]-> symbol() + ")";
++    return  ret;
++  }
++  bool match(Term &term){
++    Struct * ps = dynamic_cast<Struct *>(&term);
++    if (ps){
++      if (!_name.match(ps->_name))
++        return false;
++      if(_args.size()!= ps->_args.size())
++        return false;
++      for(int i=0;i<_args.size();i++){
++        if(_args[i]->symbol() != ps->_args[i]->symbol())
++            return false;
++      }
++      return true;
++    }
++    return false;
++  }
++private:
++  Atom _name;
++  std::vector<Term *> _args;
++};
++
++#endif
+diff --git a/term.h b/term.h
+deleted file mode 100644
+index 0572a47..0000000
+--- a/term.h
++++ /dev/null
+@@ -1,19 +0,0 @@
+-#ifndef TERM_H
+-#define TERM_H
+-
+-#include <string>
+-
+-using std::string;
+-
+-
+-class Term {
+-
+-public:
+-    virtual string symbol(){}
+-    virtual string value(){}
+-    virtual bool match(){}
+-
+-};
+-
+-
+-#endif
+\ No newline at end of file
+diff --git a/utAtom.h b/utAtom.h
+index 50eee46..657d01e 100644
+--- a/utAtom.h
++++ b/utAtom.h
+@@ -1,6 +1,6 @@
+ #ifndef UTATOM_H
+ #define UTATOM_H
+-#include "Atom.h"
++#include "atom.h"
+ 
+ TEST(Atom, first) {
+   ASSERT_TRUE(true);
+@@ -8,14 +8,26 @@ TEST(Atom, first) {
+ 
+ TEST(Atom, tom) {
+   Atom tom("tom");
+-  ASSERT_EQ("tom", tom._symbol);
++  ASSERT_EQ("tom", tom.symbol());
+ }
+ 
+ TEST(Atom, match_tom_and_jerry) {
+   Atom tom("tom");
+   Atom jerry("jerry");
+-  EXPECT_FALSE(tom == jerry);
+-  EXPECT_TRUE(tom == tom);
++  EXPECT_FALSE(tom.match(jerry));
++  EXPECT_TRUE(tom.match(tom));
++}
++
++TEST(Atom, value)
++{
++  Atom tom("tom");
++  EXPECT_EQ("tom", tom.value());
++}
++
++TEST(Atom, Virtual)
++{
++  Term* t = new Atom("tom");
++  EXPECT_EQ("tom", t->value());
+ }
+ 
+ #endif
+diff --git a/utMadRace.h b/utMadRace.h
+deleted file mode 100644
+index 044fe6b..0000000
+--- a/utMadRace.h
++++ /dev/null
+@@ -1,15 +0,0 @@
+-#include "madRace.h"
+-
+-TEST(madRace, car) {
+-  MadCar madCar(30);
+-  EXPECT_EQ(30, madCar.speed());
+-  madCar.boom(10);
+-  EXPECT_EQ(41, madCar.speed());
+-}
+-
+-TEST(madRace, bike) {
+-  MadBike madBike(0, 3, 10);
+-  EXPECT_EQ(0, madBike.speed());
+-  madBike.boom();
+-  EXPECT_EQ(3, madBike.speed());
+-}
+diff --git a/utStruct.h b/utStruct.h
+new file mode 100644
+index 0000000..31d31ad
+--- /dev/null
++++ b/utStruct.h
+@@ -0,0 +1,132 @@
++#include <vector>
++#include "atom.h"
++#include "struct.h"
++
++TEST(Struct, hobby)
++{
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  ASSERT_EQ("hobby", hobby.name().symbol());
++  ASSERT_EQ("tom", hobby.args(0)->symbol());
++  ASSERT_EQ("chaseMouse", hobby.args(1)->symbol());
++
++}
++
++TEST(Struct, symbol)
++{
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  ASSERT_EQ("hobby(tom, chaseMouse)",hobby.symbol());
++}
++
++TEST(Struct, match1)
++{
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  Struct hobby2(Atom("hobby2"), v);
++  EXPECT_FALSE(hobby.match(hobby2));
++}
++
++TEST(Struct, match2){
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  std::vector<Term *> v1 = {&tom};
++  Struct hobby2(Atom("hobby"), v1);
++  EXPECT_FALSE(hobby.match(hobby2));
++}
++
++TEST(Struct, match3){
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  std::vector<Term *> v1 = { &chaseMouse,&tom};
++  Struct hobby2(Atom("hobby"), v1);
++  EXPECT_FALSE(hobby.match(hobby2));
++}
++
++TEST(Struct, match4)
++{
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  Struct hobby2(Atom("hobby"), v);
++  EXPECT_TRUE(hobby.match(hobby2));
++}
++
++TEST(Struct, match5)
++{
++  Atom tom("tom");
++  Atom chaseMouse("chaseMouse");
++  std::vector<Term *> v = {&tom, &chaseMouse};
++  Struct hobby(Atom("hobby"), v);
++  EXPECT_FALSE(hobby.match(tom));
++}
++
++// When Struct s contains a Variable X
++// Then #symbol() should return "s(X)"
++// and #value() should also return "s(X)"
++TEST(Struct, var)
++{
++
++}
++
++// Given there is Struct s contains a Variable X
++// When Variable X matches an Atom "tom"
++// Then #symbol() should return "s(X)"
++// and #value() should also return "s(tom)"
++TEST(Struct, var_match_atom)
++{
++
++}
++
++// Given there are Struct s1 and Struct s2
++// When Struct s1 contains Struct s2
++// And Struct s2 contains a Variable X
++// Then #symbol() of s1 should return "s1(s2(X))"
++// and #value() of s1 should also return "s1(s2(X))"
++TEST(Struct, nested_struct1)
++{
++
++}
++
++// Given there are Struct s1 contains Struct s2
++// And Struct s2 contains Variable X
++// When Variable X matches an Atom "tom"
++// Then #symbol() of s1 should return "s1(s2(X))"
++// and #value() of s1 should return "s1(s2(tom))"
++TEST(Struct, nested_struct2)
++{
++
++}
++
++// Given there are Struct s1 contains Struct s2
++// And Struct s2 contains Variable X
++// When Variable X matches an Number pi: 3.14
++// Then #symbol() of s1 should return "s1(s2(X))"
++// and #value() of s1 should return "s1(s2(3.14))"
++TEST(Struct, nested_struct3)
++{
++
++}
++
++// Given there are Struct s1 contains Struct s2 and Variable X
++// And Struct s2 contains Variable Y
++// When Variable X matches Variable Y
++// And Variable X matches Atom "kent_beck"
++// Then #symbol() of s1 should return "s1(s2(Y), X)"
++// and #value() of s1 should return "s1(s2(kent_beck), kent_beck)"
++TEST(Struct, nested_struct_and_multiVariable)
++{
++
++}
++
+diff --git a/utTerm b/utTerm
+deleted file mode 100644
+index 7ce14ea..0000000
+Binary files a/utTerm and /dev/null differ
+diff --git a/utTerm.h b/utTerm.h
+index 41fead7..e034f3a 100644
+--- a/utTerm.h
++++ b/utTerm.h
+@@ -1,6 +1,7 @@
+-#ifndef UTTERM_H
+-#define UTTERM_H
++TEST(Term, hello)
++{
+ 
++<<<<<<< HEAD
+ #include "number.h"
+ #include "atom.h"
+ #include "variable.h"
+@@ -9,127 +10,6 @@
+ TEST (Number,ctor) {
+     Number first(6);
+     ASSERT_EQ(first.value(), "6");
++=======
++>>>>>>> origin/master
+ }
+-//test Number.symbol()
+-TEST (Number, symbol) {
+-    Number first(5);
+-    EXPECT_EQ(first.symbol(), "5");
+-}
+-//?- 25=25.
+-//true.
+-TEST (Number, matchSuccess) {
+-    Number first(25);
+-    Number sec(25);
+-    EXPECT_TRUE(first.match(sec));
+-}
+-//?- 25=0.
+-//false.
+-TEST (Number, matchFailureDiffValue) {
+-    Number first(25);
+-    Number sec(0);
+-    EXPECT_FALSE(first.match(sec));
+-}
+-//?- 25=tom.
+-//false.
+-TEST (Number, matchFailureDiffConstant) {
+-    Number first(25);
+-    Atom tom("tom");
+-    EXPECT_FALSE(first.match(tom));
+-}
+-//?- 25=X.
+-//true.
+-TEST (Number, matchSuccessToVar) {
+-    Number first(25);
+-    Variable X("X");
+-    EXPECT_TRUE(first.match(X));
+-}
+-
+-//?- tom=25.
+-//false.
+-TEST (Atom, matchFailureDiffConstant) {
+-    Atom tom("tom");
+-    Number first(25);
+-    EXPECT_FALSE(tom.match(first));
+-
+-}
+-
+-// ?- tom = X.
+-// X = tom.
+-TEST (Atom, matchSuccessToVar) {
+-    Atom tom("tom");
+-    Variable X("X");
+-    tom.match(X);
+-    ASSERT_EQ(X.value(), "tom");
+-}
+-
+-// ?- X=tom, tom=X.
+-// X = tom.
+-// ERROR
+-TEST (Atom, matchSuccessToVarInstantedToDiffConstant) {
+-
+-    Atom tom("tom");
+-    Variable X("X");
+-    X.match(tom);
+-    tom.match(X);
+-    ASSERT_EQ(X.value(), "tom");
+-    EXPECT_TRUE(tom.match(X));
+-}
+-
+-// ?- X=jerry, tom=X.
+-// false.
+-TEST (Atom, matchFailureToVarInstantedToDiffConstant) {
+-    Atom jerry("jerry");
+-    Variable X("X");
+-    EXPECT_TRUE(X.match(jerry));
+-    Atom tom("tom");
+-    EXPECT_FALSE(tom.match(X));
+-}
+-
+-// ?- X = 5.
+-// X = 5.
+-TEST (Var, matchSuccessToNumber) {
+-     Variable X("X");
+-     Number five(5);
+-     EXPECT_TRUE(X.match(five));
+-}
+-
+-// ?- X=25, X= 100.
+-// false.
+-TEST (Var, matchFailureToTwoDiffNumbers) {
+-  Variable X("X");
+-  Number five(5);
+-  EXPECT_TRUE(X.match(five));
+-  Number sec(100);
+-  EXPECT_FALSE(X.match(sec));
+-}
+-
+-// ?- X=tom, X= 25.
+-// false.
+-TEST (Var, matchSuccessToAtomThenFailureToNumber) {
+-  Variable X("X");
+-  Atom tom("tom");
+-  X.match(tom);
+-  Number first(25);
+-
+-  EXPECT_FALSE(X.match(first));
+-}
+-//?- tom=X, 25=X.
+-//false.
+-TEST (Var, matchSuccessToAtomThenFailureToNumber2) {
+-  Atom tom("tom");
+-  Variable X("X");
+-  tom.match(X);
+-  Number first(25);
+-  EXPECT_FALSE(first.match(X));
+-}
+-//?- X=tom, X=tom.
+-//true.
+-// ERROR
+-TEST(Var, reAssignTheSameAtom){
+-  Variable X("X");
+-  Atom tom("tom");
+-  X.match(tom);
+-
+-  ASSERT_TRUE(X.match(tom));
+-}
+-#endif
+diff --git a/utVariable b/utVariable
+deleted file mode 100644
+index 6b7569a..0000000
+Binary files a/utVariable and /dev/null differ
+diff --git a/utVariable.h b/utVariable.h
+index 477676f..89d14a5 100644
+--- a/utVariable.h
++++ b/utVariable.h
+@@ -6,7 +6,6 @@
+ TEST(Variable, constructor){
+   Variable X("X");
+   ASSERT_EQ("X", X._symbol);
+-
+ }
+ 
+ TEST(Variable , matching){
+@@ -15,6 +14,7 @@ TEST(Variable , matching){
+   X.match(tom);
+   ASSERT_EQ( "tom", X.value());
+ }
++
+ TEST (Variable , haveValue){
+   Atom tom ("tom");
+   Atom jerry ("jerry");
+@@ -23,4 +23,67 @@ TEST (Variable , haveValue){
+   ASSERT_FALSE(X.match(jerry));
+ }
+ 
+-#endif
++// ?- X=2.7182.
++// X=2.7182
++TEST(Variable , numE_to_varX){
++  Variable X("X");
++  Number first(2.7182);
++  ASSERT_TRUE(X.match(first));
++}
++
++// ?- X=Y, X=1.
++// Y=1
++TEST (Variable, varY_to_varX_and_num1_to_varX) {
++  
++}
++  
++// ?- X=Y, Y=1.
++// X=1
++TEST (Variable, varY_to_varX_and_num1_to_varY) {
++  
++}
++
++// ?- X=X, X=1.
++// X=1
++TEST (Variable, varX_match_varX_and_num1_to_varX) {
++
++}
++
++// ?- Y=1, X=Y.
++// X=1
++TEST (Variable, num1_to_varY_and_varX_match_varY) {
++
++}
++
++// ?- X=Y, Y=Z, Z=1
++// X=1, Y=1, Z=1
++TEST (Variable, num1_to_varZ_to_varY_to_varX) {
++
++}
++
++// ?- X=Y, X=Z, Z=1
++// X=1, Y=1, Z=1
++TEST (Variable, num1_to_varZ_to_varX_and_varY_to_varX) {
++  
++}
++
++// Give there is a Struct s contains Variable X
++// And another Variable Y
++// When Y matches Struct s
++// Then #symbol() of Y should return "Y"
++// And #value() of Y should return "s(X)"
++TEST (Variable, Struct1) {
++
++}
++
++// Give there is a Struct s contains Variable X
++// And another Variable Y
++// When Y matches Struct s
++// And X matches Atom "teddy"
++// Then #symbol() of Y should return "Y"
++// And #value() of Y should return "s(teddy)"
++TEST (Variable, Struct2) {
++  
++}
++
++#endif
+\ No newline at end of file
+diff --git a/variable.cpp b/variable.cpp
+deleted file mode 100644
+index 022332e..0000000
+--- a/variable.cpp
++++ /dev/null
+@@ -1,40 +0,0 @@
+-#include "atom.h"
+-#include "number.h"
+-#include "variable.h"
+-
+-using std::string;
+-
+-Variable::Variable(string s) : _symbol(s) {}
+-void Variable::setvalue(string s) { _value = s; }
+-string Variable::value() { return _value; }
+-string Variable::symbol() { return _symbol; }
+-bool Variable::match(Atom atom)
+-{
+-    bool ret = _assignable;
+-    if (_assignable)
+-    {
+-        _value = atom._symbol;
+-        _assignable = false;
+-    }
+-    else if (_value == atom._symbol)
+-    {
+-        return true;
+-    }
+-
+-    return ret;
+-}
+-
+-bool Variable::match(Number number)
+-{
+-    bool ret = _assignable;
+-    if (_assignable)
+-    {
+-        _value = number.value();
+-        _assignable = false;
+-    }
+-    else if (_value == number.value() )
+-    {
+-        return true;
+-    }
+-    return ret;
+-}
+\ No newline at end of file
+diff --git a/variable.h b/variable.h
+index 2d18da5..929d598 100644
+--- a/variable.h
++++ b/variable.h
+@@ -2,24 +2,34 @@
+ #define VARIABLE_H
+ 
+ #include <string>
++<<<<<<< HEAD
+ #include "term.h"
+ 
+ class Atom;
+ class Number;
+ 
++=======
++#include "atom.h"
++>>>>>>> origin/master
+ using std::string;
+ 
+ class Variable{
+ public:
+-  Variable(string s);
++  Variable(string s):_symbol(s){}
+   string const _symbol;
++  string value(){ return _value; }
++  bool match( Atom atom ){
++    bool ret = _assignable;
++    if(_assignable){
++      _value = atom._symbol ;
++      _assignable = false;
++    }
++    return ret;
++  }
++
++private:
+   string _value;
+   bool _assignable = true;
+-  void setvalue(string s);
+-  string value();
+-  string symbol();
+-  bool match( Atom atom );
+-  bool match(Number number);
+ };
+ 
+ #endif
