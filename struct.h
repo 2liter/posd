@@ -91,6 +91,10 @@ public:
 
     return false;
   }
+
+  string getType(){
+    return "Struct";
+  }
 private:
   Atom _name;
   std::vector<Term *> _args;

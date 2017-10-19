@@ -36,4 +36,10 @@ bool Atom::match(Term & term){
         else
             return false;
     }
+    
+}
+
+string Atom::getType()
+{
+  return "Atom";
 }

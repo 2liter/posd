@@ -16,16 +16,17 @@ using std::string;
     return _symbol;
   }
   bool Variable::match(Term &term){
-    Atom *atom_ps = dynamic_cast<Atom *>(&term);
-    if (atom_ps) {
+    
+    //Atom *atom_ps = dynamic_cast<Atom *>(&term);
+    if (term.getType() == "Atom") {
       bool ret = _assignable;
       if (_assignable){
 
-        _value = atom_ps->symbol();
+        _value = term.symbol();
         _assignable = false;
       }
       
-      atom_ps = NULL ;
+      //atom_ps = NULL ;
       return ret;
     }
 
@@ -64,3 +65,7 @@ using std::string;
     return true;
   }
   
+
+  string Variable::getType(){
+    return "Variable";
+  }

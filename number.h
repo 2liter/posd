@@ -17,6 +17,7 @@ class Number : public Term{
     double _value;
     string _str;
     string symbol() const;
+    string getType();
 
     bool match(Term &term);
 };

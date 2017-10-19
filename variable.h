@@ -13,6 +13,7 @@ public:
   string value() const;
   string symbol() const;
   bool match(Term &term);
+  string getType();
   
 
 private:

@@ -19,7 +19,9 @@ public:
     return symbol() == term.symbol();
   }
 
-
+  virtual string getType()
+  {
+  }
 };
 
 class Atom : public Term{
@@ -28,6 +30,8 @@ public:
 
   string symbol() const;
   bool match(Term & term);
+
+  string getType();
 
   string _symbol;
 };

@@ -24,3 +24,7 @@ bool Number::match(Term &term)
     }
     return symbol() == term.symbol();
 }
+
+string Number::getType(){
+  return "Number";
+}
