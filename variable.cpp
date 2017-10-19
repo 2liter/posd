@@ -35,6 +35,7 @@ using std::string;
       bool ret = _assignable;
       if (_assignable)
       {
+        if (Y) Y->_value = num_ps->symbol();
         _value = num_ps->symbol();
         _assignable = false;
       }
@@ -45,6 +46,7 @@ using std::string;
     Variable *var_ps = dynamic_cast<Variable *>(&term);
     if (var_ps)
     {
+      Y = var_ps;
       _value = var_ps->value();
       var_ps = NULL;
       return true;

@@ -16,6 +16,7 @@ public:
   
 
 private:
+  Variable *Y = 0;
   string _value;
   bool _assignable = true;
 

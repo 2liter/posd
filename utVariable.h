@@ -56,7 +56,7 @@ TEST (Variable, varY_to_varX_and_num1_to_varX) {
   Number first(1);
   X.match(Y);
   X.match(first);
-  ASSERT_EQ(X.value(), "1");
+  ASSERT_EQ( Y.value(), "1");
 }
   
 // ?- X=Y, Y=1.
@@ -135,6 +135,7 @@ TEST (Variable, Struct2) {
   X.match(teddy);
   Variable Y("Y");
   Y.match(hobby);
+
   ASSERT_EQ("s(teddy)",Y.value());
   
 }
