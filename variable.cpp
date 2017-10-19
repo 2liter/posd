@@ -24,12 +24,7 @@ using std::string;
     if (atom_ps) {
       bool ret = _assignable;
       if (_assignable){
-        Variable *temp ;
-        temp = Y;
-        while (temp && temp != this ) {
-          temp->_value = atom_ps->symbol();
-          temp = temp->Y;
-        }
+        if (Y) Y->_value = atom_ps->symbol();
 
         _value = atom_ps->symbol();
         _assignable = false;
