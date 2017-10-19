@@ -112,15 +112,16 @@ TEST(Struct, var_match_atom)
 // and #value() of s1 should also return "s1(s2(X))"
 TEST(Struct, nested_struct1)
 {
-/*
+
   Atom s1("s1");
   Atom s2("s2");
   Variable X("X");
   std::vector<Term *> v = {&X};
-  Struct hobby(s2, v);
-  Struct hobby(s1, s2);
-  ASSERT_EQ("s(tom)",hobby.value());
-*/
+  Struct hobby2(s2, v);
+  std::vector<Term *> v1 = {&hobby2};
+  Struct hobby1(s1, v1);
+  ASSERT_EQ("s1(s2(X))",hobby1.symbol());
+  ASSERT_EQ("s1(s2(X))",hobby1.value());
 
 }
 
@@ -141,6 +142,7 @@ TEST(Struct, nested_struct2)
   Struct hobby2(s2, v);
   std::vector<Term *> v1 = {&hobby2};
   Struct hobby1(s1, v1);
+  ASSERT_EQ("s1(s2(X))",hobby1.symbol());
   ASSERT_EQ("s1(s2(tom))",hobby1.value());
   
 
@@ -153,6 +155,18 @@ TEST(Struct, nested_struct2)
 // and #value() of s1 should return "s1(s2(3.14))"
 TEST(Struct, nested_struct3)
 {
+
+  Atom s1("s1");
+  Atom s2("s2");
+  Number pi(3.14);
+  Variable X("X");
+  X.match(pi);
+  std::vector<Term *> v = {&X};
+  Struct hobby2(s2, v);
+  std::vector<Term *> v1 = {&hobby2};
+  Struct hobby1(s1, v1);
+  ASSERT_EQ("s1(s2(X))",hobby1.symbol());
+  ASSERT_EQ("s1(s2(3.14))",hobby1.value());
 
 }
 
