@@ -8,15 +8,15 @@ using std::vector;
 
 class List : public Term {
 public:
-  string symbol() const{
-    if(_elements.empty()) return "[]";
-  }
-  string value() const;
-  bool match(Term & term);
 
-public:
   List (): _elements() {}
   List (vector<Term *> const & elements):_elements(elements){}
+
+  std::string symbol() const;
+  std::string value() const;
+  bool match(Term & term);
+
+
   Term * head() const;
   List * tail() const;
 

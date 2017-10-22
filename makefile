@@ -1,11 +1,6 @@
 all: hw4
 
-hw4: mainList.o atom.o utList.h list.h
-ifeq (${OS}, Windows_NT)
-	g++ -o hw4 mainList.o -lgtest
-else
-	g++ -o hw4 mainList.o -lgtest -lpthread
-endif
+
 
 
 #madRace: mainMadRace.o
@@ -29,7 +24,17 @@ mainVariable.o: mainVariable.cpp utVariable.h variable.h
 
 
 mainList.o: mainList.cpp utList.h list.h atom.h struct.h variable.h
-		g++ -std=gnu++0x -c mainList.cpp
+		g++ -std=gnu++0x -c mainList.cpp 
+list.o: list.cpp list.h 
+		g++ -std=gnu++0x -c list.cpp 
+	
+
+hw4: mainList.o atom.o list.o
+ifeq (${OS}, Windows_NT)
+	g++ -o hw4 mainList.o atom.o list.o list.h -lgtest
+else
+	g++ -o hw4 mainList.o atom.o list.o list.h -lgtest -lpthread
+endif
 
 #exp: mainExp.o
 #	g++ -o exp mainExp.o -lgtest -lpthread

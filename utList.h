@@ -14,8 +14,8 @@ using std::string;
 // Then #symbol() of the list should return "[]"
 TEST (List, constructor) {
 
-  //List l();
-  //EXPECT_EQ(string("[]"), l.symbol());
+  List l;
+  EXPECT_EQ("[]", l.symbol());
   
 }
 
