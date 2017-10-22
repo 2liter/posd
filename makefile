@@ -1,27 +1,33 @@
-all: hw4 madRace utAtom utVariable utScanner
+all: hw4
+
+hw4: mainList.o atom.o utList.h list.h
+ifeq (${OS}, Windows_NT)
+	g++ -o hw4 mainList.o -lgtest
+else
+	g++ -o hw4 mainList.o -lgtest -lpthread
+endif
 
 
-
-madRace: mainMadRace.o
-	g++ -o madRace mainMadRace.o -lgtest -lpthread
+#madRace: mainMadRace.o
+#	g++ -o madRace mainMadRace.o -lgtest -lpthread
 mainMadRace.o: mainMadRace.cpp madRace.h utMadRace.h
 	g++ -std=gnu++0x -c mainMadRace.cpp
 
-utAtom: mainAtom.o atom.o
-	g++ -o utAtom mainAtom.o atom.o -lgtest -lpthread
+#utAtom: mainAtom.o atom.o
+#	g++ -o utAtom mainAtom.o atom.o -lgtest -lpthread
 mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h
 	g++ -std=gnu++0x -c mainAtom.cpp
 
 atom.o: atom.cpp atom.h variable.h
 	g++ -std=gnu++0x -c atom.cpp
 
-utVariable: mainVariable.o atom.o
-		g++ -o utVariable mainVariable.o atom.o -lgtest -lpthread
+#utVariable: mainVariable.o atom.o
+#		g++ -o utVariable mainVariable.o atom.o -lgtest -lpthread
 mainVariable.o: mainVariable.cpp utVariable.h variable.h
 		g++ -std=gnu++0x -c mainVariable.cpp
 
-hw4: mainList.o atom.o utList.h list.h
-		g++ -o hw4 mainList.o -lgtest -lpthread
+
+
 mainList.o: mainList.cpp utList.h list.h atom.h struct.h variable.h
 		g++ -std=gnu++0x -c mainList.cpp
 
@@ -30,8 +36,8 @@ mainList.o: mainList.cpp utList.h list.h atom.h struct.h variable.h
 #mainExp.o: mainExp.cpp exp.h global.h
 #	g++ -std=gnu++0x -c mainExp.cpp
 
-utScanner: mainScanner.o scanner.h utScanner.h
-	g++ -o utScanner mainScanner.o -lgtest -lpthread
+#utScanner: mainScanner.o scanner.h utScanner.h
+#	g++ -o utScanner mainScanner.o -lgtest -lpthread
 mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h
 		g++ -std=gnu++0x -c mainScanner.cpp
 
