@@ -16,14 +16,21 @@ TEST (List, constructor) {
 
   List l;
   EXPECT_EQ("[]", l.symbol());
-  
 }
 
-// Given there are two perfect numbers: 8128
+// Given there are two perfect Numbers: 8128, 496
 // When create a new list with the perfect Number
-// Then #symbol() of the list should return "[8128]"
+// Then #symbol() of the list should return "[496, 8128]"
 TEST(List, Numbers) {
 
+  Number num(8128);
+  Number num1(496);
+  
+  vector<Term *> args = {&num, &num1};
+  List l(args);
+
+  EXPECT_EQ("[496, 8128]", l.symbol());
+  
 }
 
 // Given there are two atoms: "terence_tao", "alan_mathison_turing"
@@ -109,6 +116,7 @@ TEST(List, headAndTailMatching1) {
   */
 }
 
+
 // Example:
 // ?- [first, second, third] = [first, H|T].
 // H = second, T = [third].
@@ -124,7 +132,7 @@ TEST(List, headAndTailMatching2) {
 }
 
 // ?- [[first], second, third] = [H|T].
-// H = first, T = [[second], third].
+// H = [first], T = [second, third].
 TEST(List, headAndTailMatching3) {
 
 }
@@ -148,8 +156,4 @@ TEST (List, emptyExecptionOfHead) {
 TEST (List, emptyExecptionOfTail) {
 
 }
-
-
-
-
 #endif

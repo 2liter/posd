@@ -25,15 +25,15 @@ mainVariable.o: mainVariable.cpp utVariable.h variable.h
 
 mainList.o: mainList.cpp utList.h list.h atom.h struct.h variable.h
 		g++ -std=gnu++0x -c mainList.cpp 
-list.o: list.cpp list.h 
-		g++ -std=gnu++0x -c list.cpp 
+#list.o: list.cpp list.h 
+#		g++ -std=gnu++0x -c list.cpp 
 	
 
-hw4: mainList.o atom.o list.o
+hw4: mainList.o atom.o 
 ifeq (${OS}, Windows_NT)
-	g++ -o hw4 mainList.o atom.o list.o list.h -lgtest
+	g++ -o hw4 mainList.o atom.o list.h -lgtest
 else
-	g++ -o hw4 mainList.o atom.o list.o list.h -lgtest -lpthread
+	g++ -o hw4 mainList.o atom.o list.h -lgtest -lpthread
 endif
 
 #exp: mainExp.o
