@@ -1,29 +1,30 @@
 #ifndef VARIABLE_H
 #define VARIABLE_H
 
-#include <vector>
 #include <string>
 #include "atom.h"
-#include <iostream>
 using std::string;
 
-class Variable : public Term{
+class Variable : public Term {
 public:
-  Variable(string s);
-  string const _symbol;
-  string value() const;
-  string symbol() const;
-  bool match(Term &term);
-  string getType();
-  
-
+  Variable(string s):Term(s), _inst(0){}
+  string value() const {
+    if (_inst)
+      return _inst->value();
+    else
+      return Term::value();
+  }
+  bool match( Term & term ){
+    if (this == &term)
+      return true;
+    if(!_inst){
+      _inst = &term ;
+      return true;
+    }
+    return _inst->match(term);
+  }
 private:
-  Variable *Y = 0;
-  std::vector<Variable *> XYZ;
-  string _value;
-  bool _assignable = true;
-
-
+  Term * _inst;
 };
 
 #endif
