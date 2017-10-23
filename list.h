@@ -4,6 +4,7 @@
 #include "atom.h"
 #include <typeinfo>
 #include <vector>
+#include <iostream>
 using std::vector;
 
 class List : public Term {
@@ -40,27 +41,17 @@ public:
   bool match(Term & a){
     bool ret1 = true;
     if (typeid(a) == typeid(List)){
+      
       List *list_ps = dynamic_cast<List *>(&a);
-
-
       /*
+      std::vector<Term *>::const_iterator it = list_ps->_elements.begin();
+      for (; it != _elements.end()-1; ++it)
+        (*it)->match(a);
+      
       std::vector<Term *>::const_iterator it = _elements.begin();
       for (; it != _elements.end()-1; ++it)
         (*it)->match(a);
         */
-      /*
-      std::vector<Term *>::iterator it = _elements.begin();
-      for (; it != _elements.end(); ++it) {
-        (*it)->match((*list_ps)._elements[0]);
-      }
-      return ret;
-
-
-      for(int i = 0; _elements.size()>i ; i++ ){
-        if( _elements[i]->match(list_ps->_elements[i]) )
-        else ret = false;
-      } // for
-*/
     }
 
     return ret1 ;
@@ -71,10 +62,16 @@ public:
 
 
   Term * head() const{
-    return NULL;
+    return _elements.front();
   }
-  List * tail() const{
-    return NULL;
+  List * tail() {
+    //vector<Term *> _newElements;
+    //for(int i = 0; i < _elements.size(); ++i)
+    //_newElements[i] = _elements[i+1];
+    //_newElements.assign(_elements.begin()+1, _elements.end());
+    //_newElements.erase(_newElements.begin());
+    //List l1(_newElements);
+    return this;
   }
 
 private:

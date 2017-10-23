@@ -195,14 +195,14 @@ TEST(List, matchVarinListToAtomShouldSucceed) {
 // ?- [first, second, third] = [H|T].
 // H = first, T = [second, third].
 TEST(List, headAndTailMatching1) {
-  /*
+  
   Atom f("first"), s("second"), t("third");
   vector<Term *> args = {&f, &s, &t};
   List l(args);
 
-  EXPECT_EQ(string("first"), l.head()->symbol());
-  EXPECT_EQ(string("[second, third]"), l.tail()->value());
-  */
+  EXPECT_EQ("first", l.head()->symbol());
+  EXPECT_EQ("[second, third]", l.tail()->value());
+  
 }
 
 
