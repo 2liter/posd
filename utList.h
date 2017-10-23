@@ -161,7 +161,7 @@ TEST(List, matchToSameListWithDiffVarNameShouldSucceed) {
 // ?- [496, X, terence_tao] = [496, 8128, terence_tao].
 // X = 8128.error
 TEST(List, matchToVarToAtominListShouldSucceed) {
-/*
+
   Number num(496);
   Variable X("X");
   Number num1(8128);
@@ -172,7 +172,7 @@ TEST(List, matchToVarToAtominListShouldSucceed) {
   List l1(args1);
   EXPECT_TRUE(l1.match(l));
   EXPECT_EQ("8128",X.value());
-  */
+  
 }
 
 // ?- Y = [496, X, terence_tao], X = alan_mathison_turing.

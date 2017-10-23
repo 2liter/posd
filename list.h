@@ -43,15 +43,8 @@ public:
     if (typeid(a) == typeid(List)){
 
       List *list_ps = dynamic_cast<List *>(&a);
-      /*
-      std::vector<Term *>::const_iterator it = list_ps->_elements.begin();
-      for (; it != _elements.end()-1; ++it)
-        (*it)->match(a);
-      
-      std::vector<Term *>::const_iterator it = _elements.begin();
-      for (; it != _elements.end()-1; ++it)
-        (*it)->match(a);
-        */
+      //std::cout << list_ps << "\n" <<list_ps->address() << "\n"<< this <<"\n";
+      (*_elements[1]).match(*(list_ps->_elements[1]) );
     }
     return ret1 ;
   }
@@ -70,7 +63,7 @@ public:
     l1.set(_newElements);
     //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
 
-    return (l1.address());
+    return &l1;
     //return this;
   }
 
