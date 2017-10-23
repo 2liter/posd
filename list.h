@@ -41,7 +41,7 @@ public:
   bool match(Term & a){
     bool ret1 = true;
     if (typeid(a) == typeid(List)){
-      
+
       List *list_ps = dynamic_cast<List *>(&a);
       /*
       std::vector<Term *>::const_iterator it = list_ps->_elements.begin();
@@ -53,30 +53,29 @@ public:
         (*it)->match(a);
         */
     }
-
     return ret1 ;
-    
   }
 
-    
-
-
-  Term * head() const{
-    return _elements.front();
+  List * address() { return this;}
+  void set(vector<Term *> _ele){
+    _elements.assign(_ele.begin() , _ele.end());
   }
+
+
+  Term * head() const{ return _elements.front(); }
   List * tail() {
-    //vector<Term *> _newElements;
-    //for(int i = 0; i < _elements.size(); ++i)
-    //_newElements[i] = _elements[i+1];
-    //_newElements.assign(_elements.begin()+1, _elements.end());
-    //_newElements.erase(_newElements.begin());
-    //List l1(_newElements);
-    return this;
+    static vector<Term *> _newElements;
+    _newElements.assign(_elements.begin() + 1, _elements.end());
+    static List l1;
+    l1.set(_newElements);
+    //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
+
+    return (l1.address());
+    //return this;
   }
 
 private:
   vector<Term *> _elements;
-
 };
 
 #endif
