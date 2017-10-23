@@ -2,7 +2,7 @@
 #define LIST_H
 
 #include "atom.h"
-
+#include <typeinfo>
 #include <vector>
 using std::vector;
 
@@ -25,11 +25,49 @@ public:
     }
   }
   std::string value() const{
+    string ret;
     if(_elements.empty()) return "[]";
+    else{
+      ret = + "[";
+      std::vector<Term *>::const_iterator it = _elements.begin();
+      for (; it != _elements.end()-1; ++it)
+        ret += (*it)->value()+", ";
+      ret  += (*it)->value()+"]";
+      return ret;
+    }
   }
-  bool match(Term & term){
-    return true;
+
+  bool match(Term & a){
+    bool ret1 = true;
+    if (typeid(a) == typeid(List)){
+      List *list_ps = dynamic_cast<List *>(&a);
+
+
+      /*
+      std::vector<Term *>::const_iterator it = _elements.begin();
+      for (; it != _elements.end()-1; ++it)
+        (*it)->match(a);
+        */
+      /*
+      std::vector<Term *>::iterator it = _elements.begin();
+      for (; it != _elements.end(); ++it) {
+        (*it)->match((*list_ps)._elements[0]);
+      }
+      return ret;
+
+
+      for(int i = 0; _elements.size()>i ; i++ ){
+        if( _elements[i]->match(list_ps->_elements[i]) )
+        else ret = false;
+      } // for
+*/
+    }
+
+    return ret1 ;
+    
   }
+
+    
 
 
   Term * head() const{
