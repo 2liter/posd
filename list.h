@@ -62,8 +62,7 @@ public:
   Term * head() const{ 
     
     if(_elements.empty()) {
-      Atom *_newElements = new Atom("Accessing head in an empty list");
-      return _newElements; 
+      throw ("Accessing head in an empty list");  
     }
     return _elements.front(); 
   
@@ -74,7 +73,9 @@ public:
     static List l1;
     l1.set(_newElements);
     //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
-
+    if(_newElements.empty()) {
+      throw ("Accessing tail in an empty list");  
+    }
     return &l1;
     //return this;
   }

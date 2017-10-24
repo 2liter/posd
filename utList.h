@@ -252,13 +252,12 @@ TEST (List, emptyExecptionOfHead) {
 // When client still want to get the head of list
 // Then it should throw a string: "Accessing tail in an empty list" as an exception.
 TEST (List, emptyExecptionOfTail) {
-  /*
-  Atom f("first"), s("second"), t("third");
-  vector<Term *> args = {&f, &s, &t};
+  Atom f("first");
+  Atom s("second");
+  Atom t("third");
+  vector<Term *> args = {};
   List l(args);
 
-  EXPECT_EQ(string("second"), l.tail()->head()->value());
-  EXPECT_EQ(string("[third]"), l.tail()->tail()->value());
-  */
+  EXPECT_EQ(string("Accessing tail in an empty list"), l.tail()->value());
 }
 #endif
