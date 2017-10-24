@@ -69,9 +69,14 @@ public:
   }
   List * tail() {
     static vector<Term *> _newElements;
-    _newElements.assign(_elements.begin() + 1, _elements.end());
     static List l1;
-    l1.set(_newElements);
+    try{
+      _newElements.assign(_elements.begin() + 1, _elements.end());
+      l1.set(_newElements);
+    }
+    catch(std::exception & ex ) {
+      throw std::out_of_range("Accessing tail in an empty list"); 
+    }
     //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
     if(_newElements.empty()) {
       throw std::out_of_range("Accessing tail in an empty list");  

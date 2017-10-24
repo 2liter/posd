@@ -244,6 +244,7 @@ TEST (List, emptyExecptionOfHead) {
   Atom t("third");
   vector<Term *> args = {};
   List l(args);
+  EXPECT_THROW(l.head()->value(), std::out_of_range);
   //l.head()->value();
   /*
   try
@@ -268,6 +269,7 @@ TEST (List, emptyExecptionOfTail) {
   Atom t("third");
   vector<Term *> args = {};
   List l(args);
+  EXPECT_THROW(l.tail()->value(), std::out_of_range);
   /*
   try
   {
