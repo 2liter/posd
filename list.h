@@ -62,7 +62,7 @@ public:
   Term * head() const{ 
     
     if(_elements.empty()) {
-      throw ("Accessing head in an empty list");  
+      throw std::out_of_range("Accessing head in an empty list");  
     }
     return _elements.front(); 
   
@@ -74,7 +74,7 @@ public:
     l1.set(_newElements);
     //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
     if(_newElements.empty()) {
-      throw ("Accessing tail in an empty list");  
+      throw std::out_of_range("Accessing tail in an empty list");  
     }
     return &l1;
     //return this;
