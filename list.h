@@ -4,6 +4,7 @@
 #include "atom.h"
 #include <typeinfo>
 #include <vector>
+#include <string>
 #include <iostream>
 using std::vector;
 
@@ -13,7 +14,7 @@ public:
   List (): _elements() {}
   List (vector<Term *> const & elements):_elements(elements){}
 
-  string symbol() const{
+  std::string symbol() const{
     string ret;
     if(_elements.empty()) return "[]";
     else{
@@ -58,7 +59,15 @@ public:
   }
   vector<Term *> getEle() { return _elements;}
   Term * getEleArg(int i) { return _elements[i];}
-  Term * head() const{ return _elements.front(); }
+  Term * head() const{ 
+    
+    if(_elements.empty()) {
+      Atom *_newElements = new Atom("Accessing head in an empty list");
+      return _newElements; 
+    }
+    return _elements.front(); 
+  
+  }
   List * tail() {
     static vector<Term *> _newElements;
     _newElements.assign(_elements.begin() + 1, _elements.end());
