@@ -116,7 +116,7 @@ TEST(List, matchToVarShouldSucceed) {
 // ?- X = [496, X, terence_tao].
 // false.
 TEST(List, matchToVarOccuredInListShouldFail) {
-  /*
+  
   Number num(496);
   Variable X("X");
   std::vector<Term *> v = {&X};
@@ -125,7 +125,7 @@ TEST(List, matchToVarOccuredInListShouldFail) {
   vector<Term *> args = {&num, &X, &t};
   List l(args);
   EXPECT_FALSE(X.match(l));
-  */
+  
 }
 
 // ?- [496, X, terence_tao] = [496, X, terence_tao].

@@ -44,7 +44,10 @@ public:
 
       List *list_ps = dynamic_cast<List *>(&a);
       //std::cout << list_ps << "\n" <<list_ps->address() << "\n"<< this <<"\n";
-      (*_elements[1]).match(*(list_ps->_elements[1]) );
+      
+      for (int i = 0; _elements.size() > i; i++ )
+        (*_elements[i]).match(*(list_ps->_elements[i]) );
+      //(*_elements[1]).match(*(list_ps->_elements[1]) );
     }
     return ret1 ;
   }
@@ -53,8 +56,8 @@ public:
   void set(vector<Term *> _ele){
     _elements.assign(_ele.begin() , _ele.end());
   }
-
-
+  vector<Term *> getEle() { return _elements;}
+  Term * getEleArg(int i) { return _elements[i];}
   Term * head() const{ return _elements.front(); }
   List * tail() {
     static vector<Term *> _newElements;

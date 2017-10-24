@@ -3,6 +3,7 @@
 
 #include <string>
 #include "atom.h"
+#include "list.h"
 using std::string;
 
 class Variable : public Term {
@@ -15,6 +16,17 @@ public:
       return Term::value();
   }
   bool match( Term & term ){
+    
+    if (typeid(term) == typeid(List)){
+      
+      List *list_ps = dynamic_cast<List *>(&term);
+      //std::cout << list_ps << "\n" <<list_ps->address() << "\n"<< this <<"\n";
+      
+      for (int i = 0; (list_ps->getEle()).size() > i; i++ )
+        if((*(list_ps->getEleArg(i))).symbol() == _symbol )return false;
+    
+    }
+    
     if (this == &term)
       return true;
     if(!_inst){
