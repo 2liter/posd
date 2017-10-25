@@ -50,7 +50,7 @@ public:
         (*_elements[i]).match(*(list_ps->_elements[i]) );
       //(*_elements[1]).match(*(list_ps->_elements[1]) );
     }
-    else return false ;
+    else return a.match(*this) ;
     return ret1 ;
   }
 
@@ -63,8 +63,7 @@ public:
   Term * head() const{ 
     //std::cout << _elements;
     if(_elements.empty()) {
-      std::cout << "Accessing head in an empty list";
-      throw "Accessing head in an empty list";  
+      throw new std::string ("Accessing head in an empty list");  
     }
     
     return _elements.front(); 
@@ -74,8 +73,7 @@ public:
     static vector<Term *> _newElements;
     static List l1;
     if(_elements.empty()) {
-      std::cout << "Accessing head in an empty list";
-      throw "Accessing head in an empty list";  
+      throw new std::string("Accessing tail in an empty list");  
     }
 
     _newElements.assign(_elements.begin() + 1, _elements.end());
