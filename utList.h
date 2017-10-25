@@ -252,6 +252,7 @@ TEST(List, headAndTailMatching4) {
   List l(args);
   EXPECT_EQ("third", l.tail()->tail()->head()->value());
   EXPECT_EQ("[]", l.tail()->tail()->tail()->value());
+
 }
  
 // Given there is a empty list
@@ -260,6 +261,7 @@ TEST(List, headAndTailMatching4) {
 TEST (List, emptyExecptionOfHead) {
   vector<Term *> args = {};
   List l(args);
+  EXPECT_ANY_THROW(l.head()->value());
   //l.head()->value();
   //EXPECT_THROW(l.head()->value(), "Accessing head in an empty list");
   //l.head()->value();
@@ -286,6 +288,7 @@ TEST (List, emptyExecptionOfTail) {
   Atom t("third");
   vector<Term *> args = {};
   List l(args);
+  EXPECT_ANY_THROW(l.tail()->value());
   //EXPECT_THROW(l.tail()->value(), "Accessing tail in an empty list");
   /*
   try
