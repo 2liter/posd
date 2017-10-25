@@ -50,6 +50,7 @@ public:
         (*_elements[i]).match(*(list_ps->_elements[i]) );
       //(*_elements[1]).match(*(list_ps->_elements[1]) );
     }
+    else return false ;
     return ret1 ;
   }
 
@@ -60,27 +61,28 @@ public:
   vector<Term *> getEle() { return _elements;}
   Term * getEleArg(int i) { return _elements[i];}
   Term * head() const{ 
-    
+    //std::cout << _elements;
     if(_elements.empty()) {
-      throw std::out_of_range("Accessing head in an empty list");  
+      std::cout << "Accessing head in an empty list";
+      throw "Accessing head in an empty list";  
     }
+    
     return _elements.front(); 
   
   }
   List * tail() {
     static vector<Term *> _newElements;
     static List l1;
-    try{
-      _newElements.assign(_elements.begin() + 1, _elements.end());
-      l1.set(_newElements);
+    if(_elements.empty()) {
+      std::cout << "Accessing head in an empty list";
+      throw "Accessing head in an empty list";  
     }
-    catch(std::exception & ex ) {
-      throw std::out_of_range("Accessing tail in an empty list"); 
-    }
+
+    _newElements.assign(_elements.begin() + 1, _elements.end());
+    l1.set(_newElements);
+
     //std::cout << l1.value() << "\n" <<l1.address() << "\n"<< this <<"\n";
-    if(_newElements.empty()) {
-      throw std::out_of_range("Accessing tail in an empty list");  
-    }
+
     return &l1;
     //return this;
   }
