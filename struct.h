@@ -17,6 +17,14 @@ public:
     return _args[index];
   }
 
+  int arity() // return the number of args (terms)
+  {
+    return _args.size();
+  }
+  Term & args(int index){
+    return _args[index];
+  }
+
   Atom & name() {
     return _name;
   }
