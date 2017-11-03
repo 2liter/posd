@@ -1,4 +1,4 @@
-all: hw4
+all: hw5
 
 
 
@@ -29,12 +29,15 @@ mainList.o: mainList.cpp utList.h list.h atom.h struct.h variable.h
 #		g++ -std=gnu++0x -c list.cpp 
 	
 
-hw4: mainList.o atom.o 
+hw5: mainParser.o atom.o scanner.h utScanner.h utParser.h parser.h
 ifeq (${OS}, Windows_NT)
-	g++ -o hw4 mainList.o atom.o list.h -lgtest
+	g++ -o hw5 mainParser.o atom.o -lgtest
 else
-	g++ -o hw4 mainList.o atom.o list.h -lgtest -lpthread
+	g++ -o hw5 mainParser.o atom.o -lgtest -lpthread
 endif
+
+mainParser.o: mainParser.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
+		g++ -std=gnu++0x -c mainParser.cpp
 
 #exp: mainExp.o
 #	g++ -o exp mainExp.o -lgtest -lpthread
@@ -59,6 +62,6 @@ mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h
 #list.o: list.h list.cpp term.h var.h
 #	g++ -std=gnu++0x -c list.cpp
 clean:
-	rm -f *.o madRace utAtom utVariable utScanner hw4
+	rm -f *.o madRace utAtom utVariable utScanner hw5
 stat:
 	wc *.h *.cpp
