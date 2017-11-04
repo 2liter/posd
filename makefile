@@ -36,7 +36,7 @@ else
 	g++ -o hw5 mainParser.o atom.o -lgtest -lpthread
 endif
 
-mainParser.o: mainParser.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h
+mainParser.o: mainParser.cpp utParser.h scanner.h  atom.h struct.h variable.h parser.h
 		g++ -std=gnu++0x -c mainParser.cpp
 
 #exp: mainExp.o

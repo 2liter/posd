@@ -1,6 +1,8 @@
 #ifndef UTPARSER_H
 #define UTPARSER_H
 
+#include <iostream>
+
 #include "parser.h"
 #include "scanner.h"
 #include "term.h"
@@ -56,7 +58,12 @@ TEST_F(ParserTest, createTerms)
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "tom".
 TEST_F(ParserTest, listOfTermsTwo) {
+  Scanner scanner(" 12345,  tom ");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
 
+  ASSERT_EQ("12345", v[0]->symbol());
+  ASSERT_EQ("tom",  v[1]->symbol());
 }
 
 
@@ -108,6 +115,9 @@ TEST_F(ParserTest, parseVar) {
 // When parser parses all terms via scanner.
 // Then it should return nothing.
 TEST_F(ParserTest, listOfTermsEmpty) {
+  Scanner scanner;
+  Parser parser(scanner);
+  //ASSERT_EQ("", parser.createTerm()->symbol());
 
 }
 

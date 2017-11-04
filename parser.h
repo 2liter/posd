@@ -1,5 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
+
 #include <string>
 using std::string;
 
@@ -11,7 +12,8 @@ using std::string;
 
 class Parser{
 public:
-  Parser(Scanner scanner) : _scanner(scanner){}
+  Parser() {}
+  Parser(Scanner scanner)try  : _scanner(scanner){ }catch (std::string &e) { }
   Term* createTerm(){
     int token = _scanner.nextToken();
     if(token == VAR){
@@ -29,6 +31,7 @@ public:
         else
           return atom;
     }
+
     return nullptr;
   }
 
