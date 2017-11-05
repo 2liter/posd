@@ -2,6 +2,7 @@
 #define PARSER_H
 
 #include <string>
+#include <iostream>
 using std::string;
 
 #include "atom.h"
@@ -10,12 +11,15 @@ using std::string;
 #include "scanner.h"
 #include "struct.h"
 
+
 class Parser{
 public:
   Parser() {}
   Parser(Scanner scanner)try  : _scanner(scanner){ }catch (std::string &e) { }
   Term* createTerm(){
     int token = _scanner.nextToken();
+    std::cout << token << "\n" ;
+
     if(token == VAR){
       return new Variable(symtable[_scanner.tokenValue()].first);
     }else if(token == NUMBER){
@@ -30,8 +34,13 @@ public:
         }
         else
           return atom;
+    }else if(token == LIST){
+      token = _scanner.nextToken();
+      if(token == LIST)return new List();
     }
 
+
+    std::cout << symtable[_scanner.tokenValue()].first << "\n" ;
     return nullptr;
   }
 
