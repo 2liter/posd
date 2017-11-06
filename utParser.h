@@ -140,8 +140,7 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay) {
 TEST_F(ParserTest, parseListOfLists) {
   Scanner scanner("   [  [1], [] ]");
   Parser parser(scanner);
-  vector<Term*> terms = parser.getArgs();
-  ASSERT_EQ("[[1], []]", terms[0]->symbol());
+  ASSERT_EQ("[[1], []]", parser.createTerm()->symbol());
 }
 
 
