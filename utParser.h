@@ -207,7 +207,12 @@ TEST_F(ParserTest, illegal1) {
 // And #symbol() of Struct should return ".(1, [])".
 // And the first term should be number: "1", the second term should be another List: "[]".
 TEST_F(ParserTest, ListAsStruct) {
-
+  Scanner scanner(".(1,[])");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  //Number n = dynamic_cast<Number &>(((Struct *) v[0])->args(0));
+  //ASSERT_EQ("1", n.symbol());
+  ASSERT_EQ(".(1, [])", v[0]->symbol());
 }
 
 
@@ -218,7 +223,10 @@ TEST_F(ParserTest, ListAsStruct) {
 // And #symbol() of Struct should return ".(2, .(1, []))"
 // And the first term should be number: "2", the second term should be another Strcut: ".(1, [])".
 TEST_F(ParserTest, ListAsStruct2) {
-
+  Scanner scanner(".(2,.(1,[]))");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  ASSERT_EQ(".(2, .(1, []))", v[0]->symbol());
 }
 
 
@@ -260,7 +268,13 @@ TEST_F(ParserTest, parseStructNoArg) {
 // When parser parses all terms via scanner.
 // Then it should return three terms: "12345", "tom" and "Date".
 TEST_F(ParserTest, listOfTermsThree) {
-
+  Scanner scanner(" 12345,  tom,   Date");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("12345", v[0]->symbol());
+  ASSERT_EQ("tom", v[1]->symbol());
+  ASSERT_EQ("Date", v[2]->symbol());
 }
 
 
@@ -269,7 +283,10 @@ TEST_F(ParserTest, listOfTermsThree) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(11, 12)".
 TEST_F(ParserTest, parseStructTwoArgs) {
-
+  Scanner scanner("point(11,12)");
+  Parser parser(scanner);
+  
+  ASSERT_EQ("point(11, 12)", parser.createTerm()->symbol());
 }
 
 
@@ -278,7 +295,10 @@ TEST_F(ParserTest, parseStructTwoArgs) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "...(11, 12)".
 TEST_F(ParserTest, parseStructDOTSTwoArgs) {
-
+  Scanner scanner("...(11,12)");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  ASSERT_EQ("...(11, 12)", v[0]->symbol());
 }
 
 
@@ -287,7 +307,10 @@ TEST_F(ParserTest, parseStructDOTSTwoArgs) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(11)".
 TEST_F(ParserTest, parseStructOneArg) {
-
+  Scanner scanner("point(11)");
+  Parser parser(scanner);
+  
+  ASSERT_EQ("point(11)", parser.createTerm()->symbol());
 }
 
 #endif

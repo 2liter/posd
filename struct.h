@@ -14,6 +14,7 @@ public:
   }
   Struct(Atom name): _name(name) {}
 
+
   Term * args(int index) {
     return _args[index];
   }

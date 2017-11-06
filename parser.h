@@ -26,43 +26,40 @@ public:
     }else if(token == ATOM){
         Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
         if(_scanner.currentChar() == '(' ) {
-          
           _scanner.nextToken() ;
           vector<Term*> terms;
           
-          if(_scanner.currentChar() == ')')
-            return new Struct(*atom);
+          if(_scanner.currentChar() == ')') return new Struct(*atom);
           terms = getArgs();
-          if(_currentToken == ')')
-            return new Struct(*atom, terms);
+          if(_currentToken == ')') return new Struct(*atom, terms);
         }
         else
           return atom;
     }else if(token == LIST){
       _scanner.skipLeadingWhiteSpace();
-      if (_scanner.currentChar() == ']')
-      {
+      if (_scanner.currentChar() == ']') {
         token = _scanner.nextToken();
         return new List();
       }
 
       Term *term = createTerm();
       vector<Term *> args;
-      if (term)
-        args.push_back(term);
-      while ((token = _scanner.nextToken()) == ',')
-      {
-        args.push_back(createTerm());
-      }
+      if (term)args.push_back(term);
+      while ((token = _scanner.nextToken()) == ',') { args.push_back(createTerm());}
       if(token != LISTEND)throw std::string ("unexpected token");  
-      //_scanner.nextToken();
-      /*
-      std::cout << _scanner.currentChar() << "*\n";
-      _scanner.nextToken();
-      std::cout << _scanner.currentChar() << "*\n";
-      */
+      //std::cout << _scanner.currentChar() << "*\n";
       return new List(args);
-    }
+    }else if(token == ATOMSC){
+      Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
+      if(_scanner.currentChar() == '(' ) {
+        _scanner.nextToken() ;
+        vector<Term*> terms;
+        
+        if(_scanner.currentChar() == ')') return new Struct(*atom);
+        terms = getArgs();
+        if(_currentToken == ')') return new Struct(*atom, terms);
+      }
+    } // else if
 
       return nullptr;
   }
