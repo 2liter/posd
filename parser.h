@@ -18,7 +18,6 @@ public:
   Parser(Scanner scanner)try  : _scanner(scanner){ }catch (std::string &e) { }
   Term* createTerm(){
     int token = _scanner.nextToken();
-    std::cout << token << "\n" ;
 
     if(token == VAR){
       return new Variable(symtable[_scanner.tokenValue()].first);
@@ -35,13 +34,31 @@ public:
         else
           return atom;
     }else if(token == LIST){
-      token = _scanner.nextToken();
-      if(token == LIST)return new List();
+      _scanner.skipLeadingWhiteSpace();
+      if (_scanner.currentChar() == ']')
+      {
+        token = _scanner.nextToken();
+        return new List();
+      }
+
+      Term *term = createTerm();
+      vector<Term *> args;
+      if (term)
+        args.push_back(term);
+      while ((token = _scanner.nextToken()) == ',')
+      {
+        args.push_back(createTerm());
+      }
+      //_scanner.nextToken();
+      /*
+      std::cout << _scanner.currentChar() << "*\n";
+      _scanner.nextToken();
+      std::cout << _scanner.currentChar() << "*\n";
+      */
+      return new List(args);
     }
 
-
-    std::cout << symtable[_scanner.tokenValue()].first << "\n" ;
-    return nullptr;
+      return nullptr;
   }
 
   vector<Term*> getArgs()

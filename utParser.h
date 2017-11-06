@@ -138,7 +138,9 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay) {
 // Then it should return a List.
 // And #symbol() of List should return "[[1], []]".
 TEST_F(ParserTest, parseListOfLists) {
-
+  Scanner scanner("   [  [1], [] ]");
+  Parser parser(scanner);
+  ASSERT_EQ("[[1], []]", parser.createTerm()->symbol());
 }
 
 
