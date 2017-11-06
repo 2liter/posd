@@ -12,6 +12,7 @@ public:
   Struct(Atom name, std::vector<Term *> args): _name(name) {
     _args = args;
   }
+  Struct(Atom name): _name(name) {}
 
   Term * args(int index) {
     return _args[index];
@@ -26,18 +27,24 @@ public:
   }
   string symbol() const {
     string ret = _name.symbol() + "(";
-    std::vector<Term *>::const_iterator it = _args.begin();
-    for (; it != _args.end()-1; ++it)
-      ret += (*it)->symbol()+", ";
-    ret  += (*it)->symbol()+")";
-    return ret;
+    if(_args.empty()) ret  += ")";
+    else{
+      std::vector<Term *>::const_iterator it = _args.begin();
+      for (; it != _args.end()-1; ++it)
+        ret += (*it)->symbol()+", ";
+      ret  += (*it)->symbol()+")";
+    }
+      return ret;
   }
   string value() const {
     string ret = _name.symbol() + "(";
-    std::vector<Term *>::const_iterator it = _args.begin();
-    for (; it != _args.end()-1; ++it)
-      ret += (*it)->value()+", ";
-    ret  += (*it)->value()+")";
+    if(_args.empty()) ret  += ")";
+    else{
+      std::vector<Term *>::const_iterator it = _args.begin();
+      for (; it != _args.end()-1; ++it)
+        ret += (*it)->value()+", ";
+      ret  += (*it)->value()+")";
+    }
     return ret;
   }
 private:

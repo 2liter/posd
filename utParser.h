@@ -72,7 +72,10 @@ TEST_F(ParserTest, listOfTermsTwo) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(1, X, z(1,2,3))".
 TEST_F(ParserTest, parseStructOfStruct) {
-
+  Scanner scanner("point(1, X, z(1,2,3))");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  ASSERT_EQ("point(1, X, z(1, 2, 3))", v[0]->symbol());
 }
 
 
@@ -80,7 +83,11 @@ TEST_F(ParserTest, parseStructOfStruct) {
 // When parser parses all terms via scanner.
 // Then it should return two terms, one is "12345", another is "67".
 TEST_F(ParserTest, listOfTermsTwoNumbers) {
-
+  Scanner scanner(" 12345,  67");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  ASSERT_EQ("12345", v[0]->symbol());
+  ASSERT_EQ("67",  v[1]->symbol());
 }
 
 
@@ -89,7 +96,11 @@ TEST_F(ParserTest, listOfTermsTwoNumbers) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point(1, X, z)".
 TEST_F(ParserTest, parseStructThreeArgs) {
-
+  Scanner scanner("point(1, X, z)");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("point(1, X, z)", v[0]->symbol());
 }
 
 
@@ -109,7 +120,11 @@ TEST_F(ParserTest, parseListEmpty) {
 // Then it should return a Variable.
 // And #symbol() of Variable should return "_date".
 TEST_F(ParserTest, parseVar) {
-
+  Scanner scanner("_date");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("_date", v[0]->symbol());
 }
 
 
@@ -129,7 +144,11 @@ TEST_F(ParserTest, listOfTermsEmpty) {
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "s(s(s(s(1))))".
 TEST_F(ParserTest, parseStructOfStructAllTheWay) {
-
+  Scanner scanner("s(s(s(s(1))))");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("s(s(s(s(1))))", v[0]->symbol());
 }
 
 
@@ -140,7 +159,9 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay) {
 TEST_F(ParserTest, parseListOfLists) {
   Scanner scanner("   [  [1], [] ]");
   Parser parser(scanner);
-  ASSERT_EQ("[[1], []]", parser.createTerm()->symbol());
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("[[1], []]", v[0]->symbol());
 }
 
 
@@ -149,7 +170,11 @@ TEST_F(ParserTest, parseListOfLists) {
 // Then it should return a List.
 // And #symbol() of List should return "[[1], [], s(s(1))]".
 TEST_F(ParserTest, parseListOfListsAndStruct) {
-
+  Scanner scanner("   [  [1], [], s(s(1)) ]   ");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("[[1], [], s(s(1))]", v[0]->symbol());
 }
 
 // Given there is string: "   [1, 2]" in scanner.
@@ -157,14 +182,22 @@ TEST_F(ParserTest, parseListOfListsAndStruct) {
 // Then it should return a List.
 // And #symbol() of List should return "[1, 2]".
 TEST_F(ParserTest, parseList) {
-
+  Scanner scanner("   [1, 2]");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("[1, 2]", v[0]->symbol());
 }
 
 // Given there is string: "[1,2)" in scanner.
 // When parser parses all terms via scanner.
 // Then it should return a string: "unexpected token" as exception.
 TEST_F(ParserTest, illegal1) {
-
+  Scanner scanner("[1,2)");
+  Parser parser(scanner);
+  EXPECT_ANY_THROW(vector<Term*> v = parser.getArgs());
+  
+  //ASSERT_EQ("[1, 2]", v[0]->symbol());
 }
 
 // Given there is string: ".(1,[])" in scanner.
@@ -195,7 +228,12 @@ TEST_F(ParserTest, ListAsStruct2) {
 // And #symbol() of the first Strcut should return "s(s(s(s(1))))".
 // And #symbol() of the second Strcut should return "b(1, 2, 3)".
 TEST_F(ParserTest, parseStructOfStructAllTheWay2) {
-
+  Scanner scanner("s(s(s(s(1)))), b(1,2,3)");
+  Parser parser(scanner);
+  vector<Term*> v = parser.getArgs();
+  
+  ASSERT_EQ("s(s(s(s(1))))", v[0]->symbol());
+  ASSERT_EQ("b(1, 2, 3)", v[1]->symbol());
 }
 
 
@@ -203,8 +241,18 @@ TEST_F(ParserTest, parseStructOfStructAllTheWay2) {
 // When parser parses all terms via scanner.
 // Then it should return a Struct.
 // And #symbol() of Strcut should return "point()".
-TEST_F(ParserTest, parseStructNoArg) {
+TEST_F(ParserTest, parseStructNoArg1) {
+  //std::cout << "***"<< "\n";
+  std::vector<Term *> v = {};
+  Struct s(Atom("point"));
+  ASSERT_EQ("point()", s.symbol());
+}
 
+TEST_F(ParserTest, parseStructNoArg) {
+  Scanner scanner("point()");
+  Parser parser(scanner);
+  
+  ASSERT_EQ("point()", parser.createTerm()->symbol());
 }
 
 

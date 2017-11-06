@@ -26,8 +26,13 @@ public:
     }else if(token == ATOM){
         Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
         if(_scanner.currentChar() == '(' ) {
+          
           _scanner.nextToken() ;
-          vector<Term*> terms = getArgs();
+          vector<Term*> terms;
+          
+          if(_scanner.currentChar() == ')')
+            return new Struct(*atom);
+          terms = getArgs();
           if(_currentToken == ')')
             return new Struct(*atom, terms);
         }
@@ -49,6 +54,7 @@ public:
       {
         args.push_back(createTerm());
       }
+      if(token != LISTEND)throw std::string ("unexpected token");  
       //_scanner.nextToken();
       /*
       std::cout << _scanner.currentChar() << "*\n";
