@@ -47,7 +47,6 @@ public:
       if (term)args.push_back(term);
       while ((token = _scanner.nextToken()) == ',') { args.push_back(createTerm());}
       if(token != LISTEND)throw std::string ("unexpected token");  
-      //std::cout << _scanner.currentChar() << "*\n";
       return new List(args);
     }else if(token == ATOMSC){
       Atom* atom = new Atom(symtable[_scanner.tokenValue()].first);
@@ -75,7 +74,6 @@ public:
     }
     return args;
   }
-
 
 
 private:
