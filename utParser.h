@@ -134,7 +134,7 @@ TEST_F(ParserTest, parseVar) {
 TEST_F(ParserTest, listOfTermsEmpty) {
   Scanner scanner;
   Parser parser(scanner);
-  //ASSERT_EQ("", parser.createTerm()->symbol());
+  ASSERT_EQ(nullptr, parser.createTerm());
 
 }
 
