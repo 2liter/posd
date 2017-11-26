@@ -113,26 +113,31 @@ public:
     }
     else{
       Node * root ;
-      Node * head ;
-      std::cout << _terms.size() << "\n";
+      Node * head = new Node(opperation[1]);
+      //std::cout << _terms.size() << "\n";
       for(int i = 0; i < _terms.size() ; i ++){
         if(i+2 >= _terms.size() ){
-          Node * head = new Node(opperation[i]);
           Node * head_l = new Node(TERM,_terms[i],nullptr,nullptr);
           Node * head_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
           head->left = head_l;
           head->right = head_r;
+          
           return root;
         }
-        head = new Node(opperation[i+1]);
-        if(i = 0) root = head;
+
+        if(i == 0) root = head;
+        //std::cout << root << "\n";
         Node * term_l = new Node(TERM,_terms[i],nullptr,nullptr);
         Node * term_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
         Node * head_l = new Node(opperation[i],nullptr,term_l,term_r);
-
+        head->left = head_l;
+        Node *head_r;
+        if (i + 3 == opperation.size()) head_r = new Node(opperation[i + 2]);
+        else head_r = new Node(opperation[i + 3]);
+        head->right = head_r;
         head = head->right;
         i++;
-        std::cout << "456456" << "\n";
+        //std::cout << "456456" << "\n";
       }
 
       return root;

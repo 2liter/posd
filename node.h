@@ -3,6 +3,7 @@
 
 enum Operators {SEMICOLON, COMMA, EQUALITY, TERM};
 #include "atom.h"
+#include <iostream>
 
 class Node {
 public:
@@ -14,6 +15,25 @@ public:
       return this->left->term->match(*(this->right->term));
     }
     else{
+
+      bool ret = true;
+      Node* head = this;
+
+      return this->left->evaluate() && this->right->evaluate();
+
+/*
+      std::cout << head << "\n";
+      while (head->payload == COMMA){
+        std::cout << head << "\n";
+        if (head->left->left->term->match(*(head->left->right->term)) == false)
+          ret = false ;
+        head = head->right;
+        std::cout << head << "\n";
+      }
+      if (head->left->term->match(*(head->right->term)) == false)
+        ret = false;
+      return ret;
+*/
       //return (this->left->evaluate() && this->right->evaluate() );
     }
 
