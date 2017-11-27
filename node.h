@@ -12,16 +12,16 @@ public:
 
   bool evaluate(){
     if(this->payload == EQUALITY){
-      return this->left->term->match(*(this->right->term));
+      return (*(this->left->term)).match(*(this->right->term));
     }
     else{
 
-      bool ret = true;
-      Node* head = this;
+      bool ret = this->left->evaluate();
+      ret = ret && this->right->evaluate();
 
-      return this->left->evaluate() && this->right->evaluate();
+      return ret ;
 
-/*
+      /*
       std::cout << head << "\n";
       while (head->payload == COMMA){
         std::cout << head << "\n";

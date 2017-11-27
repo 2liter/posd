@@ -3,6 +3,7 @@
 
 #include <string>
 #include <iostream>
+#include <algorithm>
 
 using std::string;
 
@@ -88,15 +89,35 @@ public:
 
   void matchings(){
     Term* ter = createTerm();
+
     while(ter != nullptr ){
+      Term *temp = ter;
+      Variable *var = dynamic_cast<Variable *>(ter);
+      //std::cout << var << "\n";
+      if(var){
+        for (int i = _terms.size()-1; i >=0; i--)
+        {
+          if (opperation[i] == SEMICOLON)
+            break;
+          if (_terms[i]->symbol() == var->symbol())
+          {
+            //std::cout << _terms[i]->symbol() << "\n" ;
+            ter = _terms[i];
+            break;
+          }
+        }
+      }
+
       _terms.push_back(ter);
       int a = _scanner.nextToken();
       if(a == '=')opperation.push_back(EQUALITY);
       else if(a == ',') opperation.push_back(COMMA);
       else if(a == ';') opperation.push_back(SEMICOLON);
-      
-      //std::cout << a << "\n";
+
       ter = createTerm();
+
+      //if (ter != nullptr)
+      //  temp->match(*ter);
     }
 
   }
@@ -117,8 +138,11 @@ public:
       //std::cout << _terms.size() << "\n";
       for(int i = 0; i < _terms.size() ; i ++){
         if(i+2 >= _terms.size() ){
+          //如果X重複出現給上一個地址
+
           Node * head_l = new Node(TERM,_terms[i],nullptr,nullptr);
           Node * head_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
+
           head->left = head_l;
           head->right = head_r;
           
@@ -170,6 +194,7 @@ private:
 
   vector<Term *> _terms;
   vector<Operators> opperation;
+  vector<Operators> mix;
   Scanner _scanner;
   int _currentToken;
 };
