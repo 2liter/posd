@@ -1,4 +1,4 @@
-all: hw6 utScanner
+all: hw6 utScanner utVariable
 
 
 
@@ -16,8 +16,8 @@ mainAtom.o: mainAtom.cpp utAtom.h atom.h utStruct.h struct.h
 atom.o: atom.cpp atom.h variable.h
 	g++ -std=gnu++0x -c atom.cpp
 
-#utVariable: mainVariable.o atom.o
-#		g++ -o utVariable mainVariable.o atom.o -lgtest -lpthread
+utVariable: mainVariable.o atom.o
+		g++ -o utVariable mainVariable.o atom.o -lgtest -lpthread
 mainVariable.o: mainVariable.cpp utVariable.h variable.h
 		g++ -std=gnu++0x -c mainVariable.cpp
 
@@ -30,7 +30,7 @@ mainList.o: mainList.cpp list.o utList.h atom.h struct.h variable.h
 list.o:list.cpp list.h
 	g++ -std=gnu++0x -c list.cpp
 
-hw6: mainParser.o atom.o list.o scanner.h utScanner.h utParser.h parser.h node.h
+hw6: mainParser.o atom.o list.o scanner.h utParser.h parser.h node.h iterator.h
 ifeq (${OS}, Windows_NT)
 	g++ -o hw6 mainParser.o list.o atom.o -lgtest
 else

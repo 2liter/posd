@@ -14,6 +14,7 @@ using std::string;
 #include "struct.h"
 #include "list.h"
 #include "node.h"
+#include "iterator.h"
 
 #include "utParser.h"
 
@@ -97,18 +98,67 @@ public:
       if(var){
         for (int i = _terms.size()-1; i >=0; i--)
         {
-          if (opperation[i] == SEMICOLON)
-            break;
-          if (_terms[i]->symbol() == var->symbol())
-          {
+          if (opperation[i] == SEMICOLON) break;
+          if (_terms[i]->symbol() == var->symbol()){
             //std::cout << _terms[i]->symbol() << "\n" ;
             ter = _terms[i];
             break;
           }
+          // 加入如果_terms[i]是STRUCT的判斷
+          else if (Struct *str = dynamic_cast<Struct *>(_terms[i]))
+          {
+            StructIterator it(str);
+            it.first();
+            while(!it.isDone()){
+              if(Variable *var1 = dynamic_cast<Variable *>(it.currentItem())){
+                ter = it.currentItem();
+              }
+              else if (Struct *str1 = dynamic_cast<Struct *>(it.currentItem())){
+                StructIterator it1(str1);
+                it1.first();
+                while (!it1.isDone()) {
+                  if (Variable *var2 = dynamic_cast<Variable *>(it1.currentItem()))
+                    ter = it1.currentItem();
+                }
+                it1.next();
+              }
+                it.next();
+            }
+          }
         }
       }
 
-      _terms.push_back(ter);
+      else if (Struct *str = dynamic_cast<Struct *>(ter)){
+        StructIterator it(str);
+        it.first();
+        while (!it.isDone())
+        {
+          if (Struct *str1 = dynamic_cast<Struct *>(it.currentItem()))
+          {
+            StructIterator it1(str1);
+            it1.first();
+            while (!it1.isDone())
+            {
+              if (Variable *var2 = dynamic_cast<Variable *>(it1.currentItem())){
+                for (int i = _terms.size() - 1; i >= 0; i--)
+                {
+                  if (opperation[i] == SEMICOLON)
+                    break;
+                  if (_terms[i]->symbol() == var2->symbol())
+                  {
+                    //std::cout << _terms[i]->symbol() << "\n" ;
+                    it1.set(*_terms[i]);
+                    break;
+                  }
+                }
+              }
+              it1.next();
+            }
+          }
+          it.next();
+        }
+      }
+        _terms.push_back(ter);
       int a = _scanner.nextToken();
       if(a == '=')opperation.push_back(EQUALITY);
       else if(a == ',') opperation.push_back(COMMA);
@@ -138,8 +188,6 @@ public:
       //std::cout << _terms.size() << "\n";
       for(int i = 0; i < _terms.size() ; i ++){
         if(i+2 >= _terms.size() ){
-          //如果X重複出現給上一個地址
-
           Node * head_l = new Node(TERM,_terms[i],nullptr,nullptr);
           Node * head_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
 

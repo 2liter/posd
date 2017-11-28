@@ -17,7 +17,12 @@ public:
     return _args[index];
   }
 
-  Atom & name() {
+  void set(int index, Term &a){
+      _args[index] = &a;
+    }
+
+  Atom &name()
+  {
     return _name;
   }
   string symbol() const {
