@@ -18,6 +18,10 @@ public:
     return _args[index];
   }
 
+  void set(int index, Term &a){
+    _args[index] = &a;
+  }
+
   Atom & name() {
     return _name;
   }

@@ -1,6 +1,10 @@
-
+#include "iterator.h"
 #include "list.h"
 using std::vector;
+
+Iterator * List::createIterator(){
+    return new ListIterator(this);
+}
 
 string List::symbol() const{
     string ret ;

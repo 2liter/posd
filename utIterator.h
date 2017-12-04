@@ -6,7 +6,18 @@
 #include "atom.h"
 #include "list.h"
 #include "iterator.h"
-TEST(iterator, first) {
+#include "parser.h"
+#include "scanner.h"
+
+class IteratorTest : public ::testing::Test {
+protected:
+  void SetUp() {
+    symtable.clear();
+  }
+};
+
+
+TEST(IteratorTest, first) {
     Number one(1);
     Variable X("X");
     Variable Y("Y");
@@ -29,7 +40,7 @@ TEST(iterator, first) {
     ASSERT_TRUE(itStruct->isDone());
 }
 
-// TEST(iterator, nested_iterator) {
+// TEST(IteratorTest, nested_iterator) {
 //   Number one(1);
 //   Variable X("X");
 //   Variable Y("Y");
@@ -52,7 +63,7 @@ TEST(iterator, first) {
   // ASSERT_TRUE(it2.isDone());
 // }
 
-TEST(iterator, firstList) {
+TEST(IteratorTest, firstList) {
     Number one(1);
     Variable X("X");
     Variable Y("Y");
@@ -73,7 +84,7 @@ TEST(iterator, firstList) {
     ASSERT_TRUE(itList->isDone());
 }
 
-TEST(iterator, NullIterator){
+TEST(IteratorTest, NullIterator){
   Number one(1);
   NullIterator nullIterator(&one);
   nullIterator.first();
@@ -83,6 +94,21 @@ TEST(iterator, NullIterator){
   ASSERT_TRUE(it->isDone());
 }
 
+TEST(IteratorTest, DFS_OneMatching) {
+  Scanner scanner("X=1.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+  Iterator * it = et->createDFSIterator();
+  it->first();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  
+  ASSERT_TRUE(it->isDone());
+}
 
 
 #endif
