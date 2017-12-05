@@ -9,15 +9,16 @@
 #include "parser.h"
 #include "scanner.h"
 
+/*
 class IteratorTest : public ::testing::Test {
 protected:
   void SetUp() {
     symtable.clear();
   }
 };
+*/
 
-
-TEST(IteratorTest, first) {
+TEST(Iterator, first) {
     Number one(1);
     Variable X("X");
     Variable Y("Y");
@@ -40,7 +41,7 @@ TEST(IteratorTest, first) {
     ASSERT_TRUE(itStruct->isDone());
 }
 
-// TEST(IteratorTest, nested_iterator) {
+// TEST(Iterator, nested_iterator) {
 //   Number one(1);
 //   Variable X("X");
 //   Variable Y("Y");
@@ -63,7 +64,7 @@ TEST(IteratorTest, first) {
   // ASSERT_TRUE(it2.isDone());
 // }
 
-TEST(IteratorTest, firstList) {
+TEST(Iterator, firstList) {
     Number one(1);
     Variable X("X");
     Variable Y("Y");
@@ -84,7 +85,7 @@ TEST(IteratorTest, firstList) {
     ASSERT_TRUE(itList->isDone());
 }
 
-TEST(IteratorTest, NullIterator){
+TEST(Iterator, NullIterator){
   Number one(1);
   NullIterator nullIterator(&one);
   nullIterator.first();
@@ -94,7 +95,7 @@ TEST(IteratorTest, NullIterator){
   ASSERT_TRUE(it->isDone());
 }
 
-TEST(IteratorTest, DFS_OneMatching) {
+TEST(Iterator, DFS_OneMatching) {
   Scanner scanner("X=1.");
   Parser parser(scanner);
   parser.matchings();
@@ -107,6 +108,270 @@ TEST(IteratorTest, DFS_OneMatching) {
   it->next();
   ASSERT_EQ("1", it->currentItem()->symbol());
   
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_TwoTermsMatching) {
+  Scanner scanner("X=1, Y=2.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createDFSIterator();
+  it->first();
+
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_ThreeTermsMatching1) {
+  Scanner scanner("X=1, Y=2, Z=3.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createDFSIterator();
+  it->first();
+
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Z", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("3", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_ThreeTermsMatching2) {
+  Scanner scanner("X=1, Y=2; Z=3.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createDFSIterator();
+  it->first();
+
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(";", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Z", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("3", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_ThreeTermsMatching3) {
+  Scanner scanner("X=1; X=2, Y=s(s(X)).");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createDFSIterator();
+
+  it->first();
+  ASSERT_EQ(";", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("s(s(X))", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, BFS_OneMatching) {
+  Scanner scanner("X=1.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createBFSIterator();
+  it->first();
+
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+TEST(Iterator, BFS_TwoTermsMatching) {
+  Scanner scanner("X=1, Y=2.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createBFSIterator();
+  it->first();
+
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, BFS_ThreeTermsMatching1) {
+  Scanner scanner("X=1, Y=2, Z=3.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createBFSIterator();
+
+  it->first();
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Z", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("3", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, BFS_ThreeTermsMatching2) {
+  Scanner scanner("X=1, Y=2; Z=3.");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createBFSIterator();
+  it->first();
+
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(";", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Z", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("3", it->currentItem()->symbol());
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, BFS_ThreeTermsMatching3) {
+  Scanner scanner("X=1; X=2, Y=s(s(X)).");
+  Parser parser(scanner);
+  parser.matchings();
+  Node * et = parser.expressionTree();
+
+  Iterator * it = et->createBFSIterator();
+
+  it->first();
+  ASSERT_EQ(";", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ(",", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("=", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("X", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("Y", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("s(s(X))", it->currentItem()->symbol());
   ASSERT_TRUE(it->isDone());
 }
 
