@@ -3,5 +3,5 @@
 #include "iterator.h"
 Iterator * Struct::createIterator()
 {
-  return new StructIterator(this);
+  return new TempIterator<Struct>(this);
 }

@@ -27,6 +27,8 @@ public:
   }
   int arity() const { return _elements.size(); }
   Iterator * createIterator();
+  void set(int index, Term &a){
+  }
 private:
   vector<Term *> _elements;
 };

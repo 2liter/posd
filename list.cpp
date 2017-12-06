@@ -3,7 +3,7 @@
 using std::vector;
 
 Iterator * List::createIterator(){
-    return new ListIterator(this);
+    return new TempIterator<List>(this);
 }
 
 string List::symbol() const{

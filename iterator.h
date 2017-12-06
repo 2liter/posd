@@ -32,6 +32,36 @@ public:
 
 };
 
+template <class T>
+class TempIterator :public Iterator {
+public:
+  friend class Struct;
+  friend class Parser;
+  friend class List;
+  void first() {
+    _index = 0;
+  }
+
+  Term* currentItem() const {
+    return _s->args(_index);
+  }
+
+  void set(Term &term){
+    _s->set(_index, term);
+  }
+  bool isDone() const {
+    return _index >= _s->arity();
+  }
+
+  void next() {
+    _index++;
+  }
+private:
+  TempIterator(T *s): _index(0), _s(s) {}
+  int _index;
+  T* _s;
+};
+
 class StructIterator :public Iterator {
 public:
   friend class Struct;
