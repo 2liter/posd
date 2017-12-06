@@ -9,15 +9,6 @@
 #include "parser.h"
 #include "scanner.h"
 
-/*
-class IteratorTest : public ::testing::Test {
-protected:
-  void SetUp() {
-    symtable.clear();
-  }
-};
-*/
-
 TEST(Iterator, first) {
     Number one(1);
     Variable X("X");
@@ -25,10 +16,7 @@ TEST(Iterator, first) {
     Number two(2);
     Struct t(Atom("t"), { &X, &two });
     Struct s(Atom("s"), { &one, &t, &Y });
-    // StructIterator it(&s);
     Iterator *itStruct = s.createIterator();
-    // Iterator& itStruct = it;
-    // ASSERT_EQ(it.first()->symbol());
     itStruct->first();
     ASSERT_EQ("1", itStruct->currentItem()->symbol());
     ASSERT_FALSE(itStruct->isDone());
