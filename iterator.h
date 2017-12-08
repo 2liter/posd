@@ -124,10 +124,118 @@ private:
 };
 
 
+class DFSIterator :public Iterator<Term*> {
+public:
+  DFSIterator(Node *node): _index(0), _node(node) {
+    dfs(_node->term,false);
+  }
+  void dfs(Term *term,bool reset) {
+    Struct *str = dynamic_cast<Struct *>(term);
+    List *list = dynamic_cast<List *>(term);
+
+    static vector<Term *> _terms1;
+    if(reset) _terms1.clear();
+
+    if(str){
+      Iterator<Term> *itStruct = str->createIterator();
+      for( itStruct->first(); !itStruct->isDone() ; itStruct->next() ){
+        _terms1.push_back(itStruct->currentItem());
+
+        Struct *str1 = dynamic_cast<Struct *>(itStruct->currentItem());
+        List *list = dynamic_cast<List *>(itStruct->currentItem());
+        if(str1)dfs(str1,false);
+        if(list)dfs(list,false);
+      }
+      itStruct->first();
+    }
+
+    else if(list){
+      Iterator<Term> *itlist = list->createIterator();
+      for( itlist->first(); !itlist->isDone() ; itlist->next() ){
+        _terms1.push_back(itlist->currentItem());
+
+        Struct *str1 = dynamic_cast<Struct *>(itlist->currentItem());
+        List *list = dynamic_cast<List *>(itlist->currentItem());
+        if(str1)dfs(str1,false);
+        if(list)dfs(list,false);
+      }
+      itlist->first();
+    }
+
+    _terms = _terms1;
+
+  }
+  void first() {
+    dfs(_node->term,true);
+    _index = 0;
+  }
+  void set(Term &term){}
+  Term* currentItem() const {return _terms[_index];}
+  bool isDone() const { return _terms.size() >= _index  ;}
+  void next() { _index++; }
+
+private:
+  int _index;
+  vector<Term *> _terms;
+  Node * _node;
+};
+  
+class BFSIterator :public Iterator<Term*> {
+public:
+  BFSIterator(Node *node): _index(0), _node(node) {
+    breadthFirst(node->term);
+  }
+
+  void breadthFirst(Term* term)
+  {
+    queue<Term*> queue;
+    queue.push(term);
+    while (!queue.empty())
+    {
+      Term* tmpTree = queue.front();
+      queue.pop();
+
+      Struct *str = dynamic_cast<Struct *>(tmpTree);
+      List *list = dynamic_cast<List *>(tmpTree);
+
+      if(str){
+        Iterator<Term> *itStruct = str->createIterator();
+        for( itStruct->first(); !itStruct->isDone() ; itStruct->next() ){
+          _terms.push_back(itStruct->currentItem());
+          queue.push(itStruct->currentItem());
+        }
+        itStruct->first();
+      }
+  
+      else if(list){
+        Iterator<Term> *itlist = list->createIterator();
+        for( itlist->first(); !itlist->isDone() ; itlist->next() ){
+          _terms.push_back(itlist->currentItem());
+          queue.push(itlist->currentItem());
+        }
+        itlist->first();
+      }
+    }
+  }
+
+  void first() {
+    
+    _index = 0;
+  }
+  void set(Term &term){}
+  Term* currentItem() const {return _terms[_index];}
+  bool isDone() const { return _terms.size() == _index  ;}
+  void next() { _index++; }
+
+private:
+  int _index;
+  vector<Term *> _terms;
+  Node * _node;
+
+};
 
 
-
-
+/*
 class DFSIterator :public Iterator<Term*> {
 public:
   DFSIterator(Node *node): _index(0), _node(node) {
@@ -149,7 +257,8 @@ public:
     _terms = _terms1;
   }
   void first() {
-    dfs(nullptr,true);
+
+
     _index = 0;
   }
   void set(Term &term){}
@@ -190,7 +299,10 @@ public:
       }
   }
 
-  void first() {_index = 0;}
+  void first() {
+    breadthFirst(_node->left);
+    _index = 0;
+  }
   void set(Term &term){}
   Term* currentItem() const {return _terms[_index];}
   bool isDone() const { return _terms.size() == _index + 1 ;}
@@ -203,5 +315,5 @@ private:
 
 };
 
-
+*/
 #endif

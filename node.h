@@ -12,9 +12,6 @@ public:
 
   bool evaluate();
 
-  Iterator<Term*> * createDFSIterator();
-  Iterator<Term*> * createBFSIterator();
-
   Operators payload;
   Term *term;
   Node *left;

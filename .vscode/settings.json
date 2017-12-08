@@ -37,6 +37,7 @@
         "xtr1common": "cpp",
         "xutility": "cpp",
         "iostream": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "deque": "cpp"
     }
 }
