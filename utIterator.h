@@ -159,7 +159,128 @@ TEST(Iterator, BFS_Struct_1) {
   ASSERT_EQ("pickleSlice2", it->currentItem()->symbol());
   it->next();
   ASSERT_TRUE(it->isDone());
+}
 
+TEST(Iterator, BFS_Struct_2) {
+  Scanner scanner("combo1(bigMac(cheese), coke, [fries1, fries2])");
+  Parser parser(scanner);
+  Struct *str = dynamic_cast<Struct *>(parser.createTerm());
+  
+  Iterator<Term*> * it = str->createBFSIterator();
+  it->first();
+  ASSERT_EQ("bigMac(cheese)", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("coke", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[fries1, fries2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("cheese", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_List_1) {
+  Scanner scanner("[ bigMac(cheese, [pickleSlice1, pickleSlice2]), [fries1, fries2] ]");
+  Parser parser(scanner);
+  List *str = dynamic_cast<List *>(parser.createTerm());
+  
+  Iterator<Term*> * it = str->createDFSIterator();
+  it->first();
+  ASSERT_EQ("bigMac(cheese, [pickleSlice1, pickleSlice2])", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("cheese", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[pickleSlice1, pickleSlice2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("pickleSlice1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("pickleSlice2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[fries1, fries2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
+TEST(Iterator, DFS_List_2) {
+  Scanner scanner("[bigMac(cheese), coke, [fries1, fries2]]");
+  Parser parser(scanner);
+  List *str = dynamic_cast<List *>(parser.createTerm());
+  
+  Iterator<Term*> * it = str->createDFSIterator();
+  it->first();
+  ASSERT_EQ("bigMac(cheese)", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("cheese", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("coke", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[fries1, fries2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
+
+TEST(Iterator, BFS_List_1) {
+  Scanner scanner("[bigMac(cheese), coke, [fries1, fries2]]");
+  Parser parser(scanner);
+  List *str = dynamic_cast<List *>(parser.createTerm());
+  
+  Iterator<Term*> * it = str->createBFSIterator();
+  it->first();
+  ASSERT_EQ("bigMac(cheese)", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("coke", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[fries1, fries2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("cheese", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
+}
+
+
+TEST(Iterator, BFS_List_2) {
+  Scanner scanner("[bigMac(cheese, [pickleSlice1, pickleSlice2]), coke, [fries1, fries2]])");
+  Parser parser(scanner);
+  List *str = dynamic_cast<List *>(parser.createTerm());
+  
+  Iterator<Term*> * it = str->createBFSIterator();
+  it->first();
+  ASSERT_EQ("bigMac(cheese, [pickleSlice1, pickleSlice2])", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("coke", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[fries1, fries2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("cheese", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("[pickleSlice1, pickleSlice2]", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("fries2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("pickleSlice1", it->currentItem()->symbol());
+  it->next();
+  ASSERT_EQ("pickleSlice2", it->currentItem()->symbol());
+  it->next();
+  ASSERT_TRUE(it->isDone());
 }
 
 

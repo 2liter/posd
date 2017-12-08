@@ -224,7 +224,7 @@ public:
   }
   void set(Term &term){}
   Term* currentItem() const {return _terms[_index];}
-  bool isDone() const { return _terms.size() == _index  ;}
+  bool isDone() const { return _terms.size() >= _index  ;}
   void next() { _index++; }
 
 private:
