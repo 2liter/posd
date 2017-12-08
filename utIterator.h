@@ -16,7 +16,7 @@ TEST(Iterator, first) {
     Number two(2);
     Struct t(Atom("t"), { &X, &two });
     Struct s(Atom("s"), { &one, &t, &Y });
-    Iterator *itStruct = s.createIterator();
+    Iterator<Term> *itStruct = s.createIterator();
     itStruct->first();
     ASSERT_EQ("1", itStruct->currentItem()->symbol());
     ASSERT_FALSE(itStruct->isDone());
@@ -36,12 +36,12 @@ TEST(Iterator, nested_iterator) {
   Number two(2);
   Struct t(Atom("t"), { &X, &two });
   Struct s(Atom("s"), { &one, &t, &Y });
-  Iterator *it = s.createIterator();
+  Iterator<Term> *it = s.createIterator();
   it->first();
   it->next();
   Struct *s2 = dynamic_cast<Struct *>(it->currentItem());
 
-  Iterator *it2 = s2->createIterator();
+  Iterator<Term> *it2 = s2->createIterator();
   it2->first();
   ASSERT_EQ("X", it2->currentItem()->symbol());
   ASSERT_FALSE(it2->isDone());
@@ -59,7 +59,7 @@ TEST(Iterator, firstList) {
     Number two(2);
     Struct t(Atom("t"), { &X, &two });
     List l({ &one, &t, &Y });
-    Iterator* itList = l.createIterator();
+    Iterator<Term>* itList = l.createIterator();
     itList->first();
     ASSERT_EQ("1", itList->currentItem()->symbol());
     ASSERT_FALSE(itList->isDone());
@@ -77,7 +77,7 @@ TEST(Iterator, NullIterator){
   NullIterator nullIterator(&one);
   nullIterator.first();
   ASSERT_TRUE(nullIterator.isDone());
-  Iterator * it = one.createIterator();
+  Iterator<Term> * it = one.createIterator();
   it->first();
   ASSERT_TRUE(it->isDone());
 }
@@ -87,7 +87,7 @@ TEST(Iterator, DFS_OneMatching) {
   Parser parser(scanner);
   parser.matchings();
   Node * et = parser.expressionTree();
-  Iterator * it = et->createDFSIterator();
+  Iterator<Term*> * it = et->createDFSIterator();
   it->first();
   ASSERT_EQ("=", it->currentItem()->symbol());
   it->next();
@@ -104,7 +104,7 @@ TEST(Iterator, DFS_TwoTermsMatching) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createDFSIterator();
+  Iterator<Term*> * it = et->createDFSIterator();
   it->first();
 
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -129,7 +129,7 @@ TEST(Iterator, DFS_ThreeTermsMatching1) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createDFSIterator();
+  Iterator<Term*> * it = et->createDFSIterator();
   it->first();
 
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -162,7 +162,7 @@ TEST(Iterator, DFS_ThreeTermsMatching2) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createDFSIterator();
+  Iterator<Term*> * it = et->createDFSIterator();
   it->first();
 
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -195,7 +195,7 @@ TEST(Iterator, DFS_ThreeTermsMatching3) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createDFSIterator();
+  Iterator<Term*> * it = et->createDFSIterator();
 
   it->first();
   ASSERT_EQ(";", it->currentItem()->symbol());
@@ -228,7 +228,7 @@ TEST(Iterator, BFS_OneMatching) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createBFSIterator();
+  Iterator<Term*> * it = et->createBFSIterator();
   it->first();
 
   ASSERT_EQ("=", it->currentItem()->symbol());
@@ -244,7 +244,7 @@ TEST(Iterator, BFS_TwoTermsMatching) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createBFSIterator();
+  Iterator<Term*> * it = et->createBFSIterator();
   it->first();
 
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -269,7 +269,7 @@ TEST(Iterator, BFS_ThreeTermsMatching1) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createBFSIterator();
+  Iterator<Term*> * it = et->createBFSIterator();
 
   it->first();
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -302,7 +302,7 @@ TEST(Iterator, BFS_ThreeTermsMatching2) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createBFSIterator();
+  Iterator<Term*> * it = et->createBFSIterator();
   it->first();
 
   ASSERT_EQ(",", it->currentItem()->symbol());
@@ -335,7 +335,7 @@ TEST(Iterator, BFS_ThreeTermsMatching3) {
   parser.matchings();
   Node * et = parser.expressionTree();
 
-  Iterator * it = et->createBFSIterator();
+  Iterator<Term*> * it = et->createBFSIterator();
 
   it->first();
   ASSERT_EQ(";", it->currentItem()->symbol());

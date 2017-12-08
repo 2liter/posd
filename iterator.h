@@ -8,6 +8,7 @@
 
 using namespace std;
 
+template <class T>
 class Iterator {
 public:
   virtual void first() = 0;
@@ -17,52 +18,40 @@ public:
   virtual bool isDone() const = 0;
 };
 
-class NullIterator :public Iterator{
-public:
-  NullIterator(Term *n){}
-  void first(){}
-  void next(){}
-  void set(Term & term){}
-  Term * currentItem() const{
-      return nullptr;
-  }
-  bool isDone() const{
-    return true;
-  }
-
-};
-
 template <class T>
-class TempIterator :public Iterator {
+class TermIterator :public Iterator<T> {
 public:
   friend class Struct;
   friend class Parser;
   friend class List;
+  TermIterator(T *s): _index(0), _s(s) {}
   void first() {
     _index = 0;
   }
 
   Term* currentItem() const {
     return _s->args(_index);
+
   }
 
   void set(Term &term){
     _s->set(_index, term);
+    
   }
   bool isDone() const {
     return _index >= _s->arity();
-  }
+    }
 
   void next() {
     _index++;
   }
 private:
-  TempIterator(T *s): _index(0), _s(s) {}
+
   int _index;
   T* _s;
 };
 
-class StructIterator :public Iterator {
+class StructIterator :public Iterator<Term> {
 public:
   friend class Struct;
   friend class Parser;
@@ -90,7 +79,24 @@ private:
   Struct* _s;
 };
 
-class ListIterator :public Iterator {
+class NullIterator :public Iterator<Term>{
+public:
+  NullIterator(Term *n){}
+  void first(){}
+  void next(){}
+  void set(Term & term){}
+  Term * currentItem() const{
+      return nullptr;
+  }
+  bool isDone() const{
+    return true;
+  }
+
+};
+
+
+
+class ListIterator :public Iterator<Term> {
 public:
   ListIterator(List *list): _index(0), _list(list) {}
 
@@ -120,7 +126,9 @@ private:
 
 
 
-class DFSIterator :public Iterator {
+
+
+class DFSIterator :public Iterator<Term*> {
 public:
   DFSIterator(Node *node): _index(0), _node(node) {
     dfs(_node,false);
@@ -155,7 +163,7 @@ private:
   Node * _node;
 };
   
-class BFSIterator :public Iterator {
+class BFSIterator :public Iterator<Term*> {
 public:
   BFSIterator(Node *node): _index(0), _node(node) {
     breadthFirst(node);

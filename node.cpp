@@ -21,9 +21,9 @@ bool Node::evaluate(){
 }
 
 
-Iterator * Node::createDFSIterator(){
+Iterator<Term*> * Node::createDFSIterator(){
     return (new DFSIterator(this));
 }
-Iterator * Node::createBFSIterator(){
+Iterator<Term*> * Node::createBFSIterator(){
     return (new BFSIterator(this));
 }

@@ -2,8 +2,8 @@
 #include "list.h"
 using std::vector;
 
-Iterator * List::createIterator(){
-    return new TempIterator<List>(this);
+Iterator<Term> * List::createIterator(){
+    return new ListIterator(this);
 }
 
 string List::symbol() const{

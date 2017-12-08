@@ -106,39 +106,39 @@ public:
           // 加入如果_terms[i]是STRUCT的判斷
           else if (Struct *str = dynamic_cast<Struct *>(_terms[i]))
           {
-            StructIterator it(str);
-            it.first();
-            while(!it.isDone()){
-              if(Variable *var1 = dynamic_cast<Variable *>(it.currentItem())){
-                ter = it.currentItem();
+            Iterator<Term> *it = str->createIterator();
+            it->first();
+            while(!it->isDone()){
+              if(Variable *var1 = dynamic_cast<Variable *>(it->currentItem())){
+                ter = it->currentItem();
               }
-              else if (Struct *str1 = dynamic_cast<Struct *>(it.currentItem())){
-                StructIterator it1(str1);
-                it1.first();
-                while (!it1.isDone()) {
-                  if (Variable *var2 = dynamic_cast<Variable *>(it1.currentItem()))
-                    ter = it1.currentItem();
+              else if (Struct *str1 = dynamic_cast<Struct *>(it->currentItem())){
+                Iterator<Term> *it1 = str->createIterator();
+                it1->first();
+                while (!it1->isDone()) {
+                  if (Variable *var2 = dynamic_cast<Variable *>(it1->currentItem()))
+                    ter = it1->currentItem();
                 }
-                it1.next();
+                it1->next();
               }
-                it.next();
+                it->next();
             }
           }
         }
       }
 
       else if (Struct *str = dynamic_cast<Struct *>(ter)){
-        StructIterator it(str);
-        it.first();
-        while (!it.isDone())
+        Iterator<Term> *it = str->createIterator();
+        it->first();
+        while (!it->isDone())
         {
-          if (Struct *str1 = dynamic_cast<Struct *>(it.currentItem()))
+          if (Struct *str1 = dynamic_cast<Struct *>(it->currentItem()))
           {
-            StructIterator it1(str1);
-            it1.first();
-            while (!it1.isDone())
+            Iterator<Term> *it1 = str->createIterator();
+            it1->first();
+            while (!it1->isDone())
             {
-              if (Variable *var2 = dynamic_cast<Variable *>(it1.currentItem())){
+              if (Variable *var2 = dynamic_cast<Variable *>(it1->currentItem())){
                 for (int i = _terms.size() - 1; i >= 0; i--)
                 {
                   if (opperation[i] == SEMICOLON)
@@ -146,15 +146,15 @@ public:
                   if (_terms[i]->symbol() == var2->symbol())
                   {
                     //std::cout << _terms[i]->symbol() << "\n" ;
-                    it1.set(*_terms[i]);
+                    it1->set(*_terms[i]);
                     break;
                   }
                 }
               }
-              it1.next();
+              it1->next();
             }
           }
-          it.next();
+          it->next();
         }
       }
         _terms.push_back(ter);
@@ -184,20 +184,16 @@ public:
     else{
       Node * root ;
       Node * head = new Node(opperation[1]);
-      //std::cout << _terms.size() << "\n";
       for(int i = 0; i < _terms.size() ; i ++){
         if(i+2 >= _terms.size() ){
           Node * head_l = new Node(TERM,_terms[i],nullptr,nullptr);
           Node * head_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
-
           head->left = head_l;
           head->right = head_r;
-          
           return root;
         }
 
         if(i == 0) root = head;
-        //std::cout << root << "\n";
         Node * term_l = new Node(TERM,_terms[i],nullptr,nullptr);
         Node * term_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
         Node * head_l = new Node(opperation[i],nullptr,term_l,term_r);
@@ -208,7 +204,6 @@ public:
         head->right = head_r;
         head = head->right;
         i++;
-        //std::cout << "456456" << "\n";
       }
 
       return root;
@@ -241,7 +236,6 @@ private:
 
   vector<Term *> _terms;
   vector<Operators> opperation;
-  vector<Operators> mix;
   Scanner _scanner;
   int _currentToken;
 };
