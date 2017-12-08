@@ -27,6 +27,8 @@ public:
   }
   int arity() const { return _elements.size(); }
   Iterator<Term>  * createIterator();
+  Iterator<Term*> * createDFSIterator();
+  Iterator<Term*> * createBFSIterator();
   void set(int index, Term &a){
   }
 private:

@@ -6,6 +6,17 @@ Iterator<Term> * List::createIterator(){
     return new ListIterator(this);
 }
 
+Iterator<Term*> * List::createDFSIterator()
+{
+  return new DFSIterator(new Node(TERM,this,nullptr,nullptr));
+}
+
+Iterator<Term*> * List::createBFSIterator()
+{
+  return new BFSIterator(new Node(TERM,this,nullptr,nullptr));
+}
+
+
 string List::symbol() const{
     string ret ;
     if(_elements.size()==0 ){
