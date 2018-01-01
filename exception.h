@@ -46,47 +46,47 @@ TEST(ShellTest, exception_UnexpectedDisjTokenBeforePeriod) {
   }
 }
 
-// TEST(ShellTest, exception_UnexpectedConjTokenBeforePeriod1) {
-//   Scanner s("X,.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     FAIL() << "It should throw an exception: Unexpected ',' before '.'";
-//   } catch (std::string &msg) {
-//     ASSERT_EQ("Unexpected ',' before '.'", msg);
-//   }
-// }
+TEST(ShellTest, exception_UnexpectedConjTokenBeforePeriod1) {
+  Scanner s("X,.");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    FAIL() << "It should throw an exception: Unexpected ',' before '.'";
+  } catch (std::string &msg) {
+    ASSERT_EQ("Unexpected ',' before '.'", msg);
+  }
+}
 
-// TEST(ShellTest, exception_UnexpectedConjTokenBeforePeriod2) {
-//   Scanner s("X=1,.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     FAIL() << "It should throw an exception: Unbalanced operator";
-//   } catch (std::string &msg) {
-//     ASSERT_EQ("Unexpected ',' before '.'", msg);
-//   }
-// }
+TEST(ShellTest, exception_UnexpectedConjTokenBeforePeriod2) {
+  Scanner s("X=1,.");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    FAIL() << "It should throw an exception: Unbalanced operator";
+  } catch (std::string &msg) {
+    ASSERT_EQ("Unexpected ',' before '.'", msg);
+  }
+}
 
-// TEST(ShellTest, exception_UnbalancedOperator1) {
-//   Scanner s("X = match(tom, marry;)");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     FAIL() << "It should throw an exception: Unbalanced operator";
-//   } catch (std::string &msg) {
-//     ASSERT_EQ("Unbalanced operator", msg);
-//   }
-// }
+TEST(ShellTest, exception_UnbalancedOperator1) {
+  Scanner s("X = match(tom, marry;)");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    FAIL() << "It should throw an exception: Unbalanced operator";
+  } catch (std::string &msg) {
+    ASSERT_EQ("Unbalanced operator", msg);
+  }
+}
 
-// TEST(ShellTest, exception_UnbalancedOperator2) {
-//   Scanner s("X = [tom, marry ;]");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     FAIL() << "It should throw an exception: Unbalanced operator";
-//   } catch (std::string &msg) {
-//     ASSERT_EQ("Unbalanced operator", msg);
-//   }
-// }
+TEST(ShellTest, exception_UnbalancedOperator2) {
+  Scanner s("X = [tom, marry ;]");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    FAIL() << "It should throw an exception: Unbalanced operator";
+  } catch (std::string &msg) {
+    ASSERT_EQ("Unbalanced operator", msg);
+  }
+}
 #endif

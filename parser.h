@@ -55,7 +55,7 @@ public:
       _terms.erase(_terms.begin() + startIndexOfStructArgs, _terms.end());
       return new Struct(structName, args);
     } else {
-      throw string("unexpected token");
+      throw string("Unbalanced operator");
     }
   }
 
@@ -71,7 +71,7 @@ public:
       }
       return new List(args);
     } else {
-      throw string("unexpected token");
+      throw string("Unbalanced operator");
     }
   }
 
@@ -84,8 +84,16 @@ public:
     disjunctionMatch();
     restDisjunctionMatch();
           // std::cout << _scanner.currentChar() << "\n" ;
-    if (createTerm() != nullptr || _currentToken != '.'){
+    if (createTerm() != nullptr || _currentToken == EOS){
       throw string("Missing token '.'");
+    }
+    else if( _currentToken != '.'){
+      std::stringstream ss;
+      string s;
+      char c = _currentToken;
+      ss << c; 
+      ss >> s;
+      throw string("Unexpected '"+ s +"' before '.'");
     }
   }
 
@@ -121,14 +129,17 @@ public:
   }
 
   void conjunctionMatch() {
+    if (_scanner.currentChar() == '.') {
+      std::stringstream ss;
+      string s;
+      char c = _currentToken;
+      ss << c; 
+      ss >> s;
+      throw string("Unexpected '" +  s + "' before '.'");
+    }
     Term * left = createTerm();
 
     
-    if (createTerm() == nullptr && _currentToken == '=') {
-      Term * right = createTerm();
-      _expStack.push(new MatchExp(left, right));
-    }
-
 
     if (createTerm() == nullptr && _currentToken == '=') {
       Term * right = createTerm();
@@ -140,7 +151,7 @@ public:
     else {
       std::stringstream ss;
       string s;
-      char c = _scanner.currentChar();
+      char c = _currentToken;
       ss << c; 
       ss >> s;
       throw string("Unexpected '" +  s + "' before '.'");
