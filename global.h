@@ -2,7 +2,6 @@
 #define GLOBAL_H
 
 #include <algorithm>
-#include <iostream>
 
 using std::pair;
 
@@ -18,8 +17,6 @@ const int ATOM = 257;
 const int ATOMSC = 258;
 const int VAR = 259;
 
-const int LIST = 260;
-const int LISTEND = 261;
 #include <vector>
 using std::vector;
 

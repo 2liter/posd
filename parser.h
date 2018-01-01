@@ -1,10 +1,6 @@
 #ifndef PARSER_H
 #define PARSER_H
-
 #include <string>
-#include <iostream>
-#include <algorithm>
-
 using std::string;
 
 #include "atom.h"
@@ -13,13 +9,14 @@ using std::string;
 #include "scanner.h"
 #include "struct.h"
 #include "list.h"
-#include "node.h"
-#include "iterator.h"
+#include "exp.h"
+#include <stack>
 
+using std::stack;
 
 class Parser{
 public:
-  Parser(Scanner scanner) : _scanner(scanner), _terms(){}
+  Parser(Scanner scanner) : _scanner(scanner), _terms() {}
 
   Term* createTerm(){
     int token = _scanner.nextToken();
@@ -36,7 +33,7 @@ public:
       else
         return atom;
     }
-    else if(token == LIST){
+    else if(token == '['){
       return list();
     }
 
@@ -61,160 +58,84 @@ public:
   }
 
   Term * list() {
-    _scanner.skipLeadingWhiteSpace();
-    if (_scanner.currentChar() == ']') {
-      _currentToken = _scanner.nextToken();
-      return new List();
-    }
-
-    Term *term = createTerm();
-    vector<Term *> args;
-    if (term)args.push_back(term);
-    while ((_currentToken = _scanner.nextToken()) == ',') { args.push_back(createTerm());}
-    if(_currentToken != LISTEND)throw std::string ("unexpected token");  
-    return new List(args);
-    
     int startIndexOfListArgs = _terms.size();
     createTerms();
     if(_currentToken == ']')
     {
       vector<Term *> args(_terms.begin() + startIndexOfListArgs, _terms.end());
       _terms.erase(_terms.begin() + startIndexOfListArgs, _terms.end());
+      if(args.size()==0){
+        return new Atom("[]");
+      }
       return new List(args);
     } else {
       throw string("unexpected token");
     }
-    
-  }
-
-  void matchings(){
-    Term* ter = createTerm();
-
-    while(ter != nullptr ){
-      Term *temp = ter;
-      Variable *var = dynamic_cast<Variable *>(ter);
-      //std::cout << var << "\n";
-      if(var){
-        for (int i = _terms.size()-1; i >=0; i--)
-        {
-          if (opperation[i] == SEMICOLON) break;
-          if (_terms[i]->symbol() == var->symbol()){
-            //std::cout << _terms[i]->symbol() << "\n" ;
-            ter = _terms[i];
-            break;
-          }
-          // 加入如果_terms[i]是STRUCT的判斷
-          else if (Struct *str = dynamic_cast<Struct *>(_terms[i]))
-          {
-            Iterator<Term> *it = str->createIterator();
-            it->first();
-            while(!it->isDone()){
-              if(Variable *var1 = dynamic_cast<Variable *>(it->currentItem())){
-                ter = it->currentItem();
-              }
-              else if (Struct *str1 = dynamic_cast<Struct *>(it->currentItem())){
-                Iterator<Term> *it1 = str->createIterator();
-                it1->first();
-                while (!it1->isDone()) {
-                  if (Variable *var2 = dynamic_cast<Variable *>(it1->currentItem()))
-                    ter = it1->currentItem();
-                }
-                it1->next();
-              }
-                it->next();
-            }
-          }
-        }
-      }
-
-      else if (Struct *str = dynamic_cast<Struct *>(ter)){
-        Iterator<Term> *it = str->createIterator();
-        it->first();
-        while (!it->isDone())
-        {
-          if (Struct *str1 = dynamic_cast<Struct *>(it->currentItem()))
-          {
-            Iterator<Term> *it1 = str->createIterator();
-            it1->first();
-            while (!it1->isDone())
-            {
-              if (Variable *var2 = dynamic_cast<Variable *>(it1->currentItem())){
-                for (int i = _terms.size() - 1; i >= 0; i--)
-                {
-                  if (opperation[i] == SEMICOLON)
-                    break;
-                  if (_terms[i]->symbol() == var2->symbol())
-                  {
-                    //std::cout << _terms[i]->symbol() << "\n" ;
-                    it1->set(*_terms[i]);
-                    break;
-                  }
-                }
-              }
-              it1->next();
-            }
-          }
-          it->next();
-        }
-      }
-        _terms.push_back(ter);
-      int a = _scanner.nextToken();
-      if(a == '=')opperation.push_back(EQUALITY);
-      else if(a == ',') opperation.push_back(COMMA);
-      else if(a == ';') opperation.push_back(SEMICOLON);
-
-      ter = createTerm();
-
-      //if (ter != nullptr)
-      //  temp->match(*ter);
-    }
-
-  }
-
-  Node * expressionTree(){
-
-    if(_terms.size() <=2 ){
-      Node * head = new Node(opperation[0]);
-      Node * head_l = new Node(TERM,_terms[0],nullptr,nullptr);
-      Node * head_r = new Node(TERM,_terms[1],nullptr,nullptr);
-      head->left = head_l;
-      head->right = head_r;
-      return head;
-    }
-    else{
-      Node * root ;
-      Node * head = new Node(opperation[1]);
-      for(int i = 0; i < _terms.size() ; i ++){
-        if(i+2 >= _terms.size() ){
-          Node * head_l = new Node(TERM,_terms[i],nullptr,nullptr);
-          Node * head_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
-          head->left = head_l;
-          head->right = head_r;
-          return root;
-        }
-
-        if(i == 0) root = head;
-        Node * term_l = new Node(TERM,_terms[i],nullptr,nullptr);
-        Node * term_r = new Node(TERM,_terms[i+1],nullptr,nullptr);
-        Node * head_l = new Node(opperation[i],nullptr,term_l,term_r);
-        head->left = head_l;
-        Node *head_r;
-        if (i + 3 == opperation.size()) head_r = new Node(opperation[i + 2]);
-        else head_r = new Node(opperation[i + 3]);
-        head->right = head_r;
-        head = head->right;
-        i++;
-      }
-
-      return root;
-    }
-
-    
-    //Node * head = new Node();
   }
 
   vector<Term *> & getTerms() {
     return _terms;
+  }
+
+  void buildExpression(){
+    // createTerm();
+    disjunctionMatch();
+    restDisjunctionMatch();
+          std::cout << _scanner.currentChar() << "\n" ;
+    if (createTerm() != nullptr || _currentToken != '.'){
+      std::cout << _scanner.currentChar() << "\n" ;
+      std::cout << _currentToken << "\n" ;
+      std::cout << (_currentToken != '.') << "\n" ;
+      throw string("expected token.");
+    }
+  }
+
+  void restDisjunctionMatch() {
+    if (_scanner.currentChar() == ';') {
+      createTerm();
+      disjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new DisjExp(left, right));
+      restDisjunctionMatch();
+    }
+  }
+
+  void disjunctionMatch() {
+    conjunctionMatch();
+    restConjunctionMatch();
+  }
+
+  void restConjunctionMatch() {
+    if (_scanner.currentChar() == ',') {
+      createTerm();
+      conjunctionMatch();
+      Exp *right = _expStack.top();
+      _expStack.pop();
+      Exp *left = _expStack.top();
+      _expStack.pop();
+      _expStack.push(new ConjExp(left, right));
+      restConjunctionMatch();
+    }
+  }
+
+  void conjunctionMatch() {
+    Term * left = createTerm();
+    if (createTerm() == nullptr && _currentToken == '=') {
+      Term * right = createTerm();
+      _expStack.push(new MatchExp(left, right));
+    }
+  }
+
+  Exp* getExpressionTree(){
+    return _expStack.top();
+  }
+
+  string result(){
+    if(_expStack.top()->evaluate() == false)
+      return "false.";
   }
 
 private:
@@ -222,6 +143,7 @@ private:
   FRIEND_TEST(ParserTest,ListOfTermsEmpty);
   FRIEND_TEST(ParserTest,listofTermsTwoNumber);
   FRIEND_TEST(ParserTest, createTerm_nestedStruct3);
+  FRIEND_TEST(ParserTest, createTerms);
 
   void createTerms() {
     Term* term = createTerm();
@@ -235,8 +157,9 @@ private:
   }
 
   vector<Term *> _terms;
-  vector<Operators> opperation;
   Scanner _scanner;
   int _currentToken;
+  //MatchExp* _root;
+  stack<Exp*> _expStack;
 };
 #endif
