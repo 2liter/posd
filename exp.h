@@ -2,10 +2,13 @@
 #define EXP_H
 
 #include "atom.h"
+//#include "global.h"
 
 class Exp {
 public:
   virtual bool evaluate() = 0;
+    Exp * _left;
+  Exp * _right;
 };
 
 
@@ -19,7 +22,6 @@ public:
     return _left->match(*_right);
   }
 
-private:
   Term* _left;
   Term* _right;
 };
@@ -31,10 +33,10 @@ public:
   }
 
   bool evaluate() {
+    
     return (_left->evaluate() && _right->evaluate());
   }
 
-private:
   Exp * _left;
   Exp * _right;
 };
@@ -49,7 +51,6 @@ public:
     return (_left->evaluate() || _right->evaluate());
   }
 
-private:
   Exp * _left;
   Exp * _right;
 };

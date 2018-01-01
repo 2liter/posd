@@ -22,7 +22,7 @@
 //      *  maybe your implementation here.
 //      */
 
-//     ASSERT_EQ("FILCO = awesome.", result);
+//     ASSERT_EQ("FILCO = awesome.", p.result());
 //   } catch (std::string & msg) {
 //     FAIL() << msg;
 //   }
@@ -134,7 +134,7 @@ TEST(Shell, atomMatchAtomFail) {
 //      *  maybe your implementation here.
 //      */
 
-//     ASSERT_EQ("false.", result);
+//     ASSERT_EQ("false.", p.result());
 //   } catch (std::string &msg) {
 //     FAIL() << msg;
 //   }
@@ -220,53 +220,53 @@ TEST(Shell, atomMatchAtomFail) {
 //   }
 // }
 
-// TEST(Shell, conjunctionMatching_trueAndfalse) {
-//   Scanner s("X=X, 1=2.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, conjunctionMatching_trueAndfalse) {
+  Scanner s("X=X, 1=2.");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("false.", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("false.", p.result());
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
-// TEST(Shell, conjunctionMatching_falseAndtrue) {
-//   Scanner s("3=2, X=X.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, conjunctionMatching_falseAndtrue) {
+  Scanner s("3=2, X=X.");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("false.", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("false.", p.result());
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
-// TEST(Shell, conjunctionMatching_falseAndfalse) {
-//   Scanner s("X=1, X=2, 1=2.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, conjunctionMatching_falseAndfalse) {
+  Scanner s("X=1, X=2, 1=2.");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("false.", result);
-//   } catch (std::string &msg) { 
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("false.", p.result());
+  } catch (std::string &msg) { 
+    FAIL() << msg;
+  }
+}
 
 // TEST(Shell, conjunctionMatching_duplicateExp) {
 //   Scanner s("Y=1, X=2, X=2.");
@@ -398,20 +398,20 @@ TEST(Shell, atomMatchAtomFail) {
 // }
 
 
-// TEST(Shell, exceptionMissingPeriodToken) {
-//   Scanner s("X=1");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, exceptionMissingPeriodToken) {
+  Scanner s("X=1");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
     
-//     FAIL() << "It should throw an exception: Missing token '.'";
-//   } catch (std::string &msg) {
-//     ASSERT_EQ("Missing token '.'", msg);
-//   }
-// }
+    FAIL() << "It should throw an exception: Missing token '.'";
+  } catch (std::string &msg) {
+    ASSERT_EQ("Missing token '.'", msg);
+  }
+}
 
 #endif

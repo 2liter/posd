@@ -35,7 +35,7 @@ endif
 
 utScanner: mainScanner.o atom.o list.o struct.o scanner.h utScanner.h utParser.h parser.h
 	g++ -o utScanner mainScanner.o atom.o list.o struct.o -lgtest -lpthread
-mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h utExp.h expression.h
+mainScanner.o: mainScanner.cpp utScanner.h scanner.h  atom.h struct.h variable.h  utParser.h parser.h utExp.h expression.h exception.h
 		g++ -std=gnu++0x -c mainScanner.cpp
 utIterator: mainIterator.o atom.o list.o struct.o iterator.h utIterator.h
 	g++ -o utIterator mainIterator.o atom.o list.o struct.o -lgtest -lpthread

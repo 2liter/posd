@@ -38,6 +38,8 @@
         "xutility": "cpp",
         "iostream": "cpp",
         "list": "cpp",
-        "deque": "cpp"
+        "deque": "cpp",
+        "queue": "cpp",
+        "stack": "cpp"
     }
 }

@@ -1,5 +1,7 @@
 #ifndef PARSER_H
 #define PARSER_H
+#include <sstream>
+
 #include <string>
 using std::string;
 
@@ -81,12 +83,9 @@ public:
     // createTerm();
     disjunctionMatch();
     restDisjunctionMatch();
-          std::cout << _scanner.currentChar() << "\n" ;
+          // std::cout << _scanner.currentChar() << "\n" ;
     if (createTerm() != nullptr || _currentToken != '.'){
-      std::cout << _scanner.currentChar() << "\n" ;
-      std::cout << _currentToken << "\n" ;
-      std::cout << (_currentToken != '.') << "\n" ;
-      throw string("expected token.");
+      throw string("Missing token '.'");
     }
   }
 
@@ -123,10 +122,31 @@ public:
 
   void conjunctionMatch() {
     Term * left = createTerm();
+
+    
     if (createTerm() == nullptr && _currentToken == '=') {
       Term * right = createTerm();
       _expStack.push(new MatchExp(left, right));
     }
+
+
+    if (createTerm() == nullptr && _currentToken == '=') {
+      Term * right = createTerm();
+      _expStack.push(new MatchExp(left, right));
+    }
+    else if (_currentToken == '.') {
+      throw string(left->symbol() + " does never get assignment"); 
+    }
+    else {
+      std::stringstream ss;
+      string s;
+      char c = _scanner.currentChar();
+      ss << c; 
+      ss >> s;
+      throw string("Unexpected '" +  s + "' before '.'");
+  
+    }
+  
   }
 
   Exp* getExpressionTree(){
@@ -134,8 +154,24 @@ public:
   }
 
   string result(){
+    Exp* root = _expStack.top();
     if(_expStack.top()->evaluate() == false)
       return "false.";
+    else{
+      Variable *var = dynamic_cast<Variable*>(root->_left);
+      std::cout << var << "\n";
+      if(var){
+        Term *term = dynamic_cast<Term*>(root->_right);
+        std::cout << var->symbol() << "\n";
+        rel = var->symbol() + " = " + term->symbol();
+      
+      // while(!dynamic_cast<MatchExp*>(root->_right)){
+      //   root = root->_right ;
+      }
+      return rel;
+    }
+    return ".";
+    
   }
 
 private:
@@ -156,6 +192,7 @@ private:
     }
   }
 
+  std::string rel = "";
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;

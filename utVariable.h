@@ -93,6 +93,15 @@ TEST (Variable, num1_to_varY_and_varX_match_varY) {
   ASSERT_EQ("1", Y.value());
 }
 
+TEST (Variable, conjunctionMatching_false) {
+  Variable X("X");
+  Number _1(1);
+  Number _2(2);
+  ASSERT_TRUE(X.match(_1));
+  ASSERT_FALSE(X.match(_2));
+  ASSERT_EQ("1", X.value());
+}
+
 // ?- X=Y, Y=Z, Z=1
 // X=1, Y=1, Z=1
 TEST (Variable, num1_to_varZ_to_varY_to_varX) {
