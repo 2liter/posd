@@ -12,21 +12,21 @@
  * 
  */
 
-// TEST(Shell, varMatchAtomSuc) {
-//   Scanner s("FILCO=awesome.");
-//   Parser p(s);
-//   try{
-//     p.buildExpression();
+TEST(Shell, varMatchAtomSuc) {
+  Scanner s("FILCO=awesome.");
+  Parser p(s);
+  try{
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("FILCO = awesome.", p.result());
-//   } catch (std::string & msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("FILCO = awesome.", p.result());
+  } catch (std::string & msg) {
+    FAIL() << msg;
+  }
+}
 
 TEST(Shell, atomMatchAtomFail) {
   Scanner s("smog=natural_disaster.");
@@ -43,53 +43,53 @@ TEST(Shell, atomMatchAtomFail) {
   }
 }
 
-// TEST(Shell, varMatchList) {
-//   Scanner s("Painful=[Clerk,forgot,pipette].");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, varMatchList) {
+  Scanner s("Painful=[Clerk,forgot,pipette].");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("Painful = [Clerk, forgot, pipette].", result);
-//   } catch (std::string & msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("Painful = [Clerk, forgot, pipette].", p.result());
+  } catch (std::string & msg) {
+    FAIL() << msg;
+  }
+}
 
-// TEST(Shell, varMatchStruct) {
-//   Scanner s("Pitiful=binding([rope,rope,rope], Turtle, oil).");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, varMatchStruct) {
+  Scanner s("Pitiful=binding([rope,rope,rope], Turtle, oil).");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("Pitiful = binding([rope, rope, rope], Turtle, oil).", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("Pitiful = binding([rope, rope, rope], Turtle, oil).", p.result());
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
-// TEST(Shell, varMatchItself) {
-//   Scanner s("Taiwan=Taiwan.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
+TEST(Shell, varMatchItself) {
+  Scanner s("Taiwan=Taiwan.");
+  Parser p(s);
+  try {
+    p.buildExpression();
     
-//      /**
-//      *  maybe your implementation here.
-//      */
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("true.", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("true.",  p.result());
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
 // TEST(Shell, varMachingListThatIncludeVar) {
 //   Scanner s("X=[Y,tom], Y=marry.");
@@ -101,7 +101,7 @@ TEST(Shell, atomMatchAtomFail) {
 //      *  maybe your implementation here.
 //      */
 
-//     ASSERT_EQ("X = [marry, tom], Y = marry.", result);
+//     ASSERT_EQ("X = [marry, tom], Y = marry.",  p.result());
 //   } catch (std::string &msg) {
 //     FAIL() << msg;
 //   }

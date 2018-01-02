@@ -164,24 +164,52 @@ public:
     return _expStack.top();
   }
 
+  // string match_context( Exp* root ){
+  //   MatchExp *match_exp = root;
+  //   Variable *var = dynamic_cast<Variable*>(match_exp->_left);
+  //   if(var){
+  //     Term *term = dynamic_cast<Term*>(match_exp->_right);
+  //     rel = var->symbol() + " = " + term->symbol();
+  //     if(Variable *var = dynamic_cast<Variable*>(match_exp->_right))rel = "true";
+  //   }
+  // }
+
   string result(){
     Exp* root = _expStack.top();
-    if(_expStack.top()->evaluate() == false)
+    if(root->evaluate() == false)
       return "false.";
     else{
-      Variable *var = dynamic_cast<Variable*>(root->_left);
-      std::cout << var << "\n";
-      if(var){
-        Term *term = dynamic_cast<Term*>(root->_right);
-        std::cout << var->symbol() << "\n";
-        rel = var->symbol() + " = " + term->symbol();
-      
-      // while(!dynamic_cast<MatchExp*>(root->_right)){
-      //   root = root->_right ;
+
+      MatchExp *exp = dynamic_cast<MatchExp*>(root); //if only one matching
+      if(exp){
+        Variable *var = dynamic_cast<Variable*>(exp->_left);
+        //std::cout << exp << "\n";
+        if(var){
+          Term *term = dynamic_cast<Term*>(exp->_right);
+          //std::cout << var->symbol() << "\n";
+          rel = var->symbol() + " = " + term->symbol();
+          if(Variable *var = dynamic_cast<Variable*>(exp->_right))rel = "true";
+        }
       }
+
+      // else{
+      //   match_context(root->_left);
+      //   MatchExp *exp = dynamic_cast<MatchExp*>(root->_right);
+      //   rel = rel + ", " ;
+      //   while(!exp ){
+      //     root = root->_right;
+      //     exp = dynamic_cast<MatchExp*>(root->_right)
+      //   }
+      //   match_context(root->_right);
+
+      // }
+
+
+
+      rel += ".";
       return rel;
     }
-    return ".";
+    return "";
     
   }
 
@@ -203,7 +231,7 @@ private:
     }
   }
 
-  std::string rel = "";
+  std::string rel ;
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;
