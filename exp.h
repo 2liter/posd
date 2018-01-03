@@ -26,7 +26,8 @@ public:
 class MatchExp : public Exp {
 public:
   MatchExp(Term* left, Term* right): _left(left), _right(right){
-
+    ret = "";
+    _table.clear();
   }
 
   bool evaluate(){
@@ -85,15 +86,29 @@ private:
 class DisjExp : public Exp {
 public:
   DisjExp(Exp *left, Exp *right) : _left(left), _right(right) {
-
+    ret = "";
+    _table.clear();
   }
 
   bool evaluate() {
-    return (_left->evaluate() || _right->evaluate());
+    bool left,right;
+    string instr = ret;
+    left = _left->evaluate();
+    //if(!left) ret = instr;
+    if(instr != ret)ret = ret + "; ";
+    instr = ret;
+    right = _right->evaluate();
+    //if(!right) ret = instr;
+    if(ret[ret.length()-1 ] == ' ') ret = ret.substr(0,ret.length()-2);
+    return (left || right);
   }
 
   string getEvaluateString(){
     return (_left->getEvaluateString() + "; "+  _right->getEvaluateString());
+  }
+
+  string getRet(){
+    return ret;
   }
 
 private:

@@ -337,7 +337,7 @@ TEST(Shell, disjunctionMatching2) {
   try {
     p.buildExpression();
     p.getExpressionTree()->evaluate();
-    string result = p.getExpressionTree()->getEvaluateString() + "." ;
+    string result = p.getExpressionTree()->getRet() + "." ;
      /**
      *  maybe your implementation here.
      */
@@ -370,7 +370,8 @@ TEST(Shell, disjunctionMatching3) {
 //   Parser p(s);
 //   try {
 //     p.buildExpression();
-    
+//     p.getExpressionTree()->evaluate();
+//     string result = p.getExpressionTree()->getEvaluateString() + "." ;
 //      /**
 //      *  maybe your implementation here.
 //      */
