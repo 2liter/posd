@@ -1,7 +1,5 @@
 #ifndef PARSER_H
 #define PARSER_H
-#include <sstream>
-
 #include <string>
 using std::string;
 
@@ -13,7 +11,8 @@ using std::string;
 #include "list.h"
 #include "exp.h"
 #include <stack>
-
+#include <map>
+using std::map;
 using std::stack;
 
 class Parser{
@@ -24,7 +23,10 @@ public:
     int token = _scanner.nextToken();
     _currentToken = token;
     if(token == VAR){
-      return new Variable(symtable[_scanner.tokenValue()].first);
+      if(_table.find(symtable[_scanner.tokenValue()].first) == _table.end() )
+        _table.insert(pair<string,Variable*>(symtable[_scanner.tokenValue()].first,new Variable(symtable[_scanner.tokenValue()].first)));
+      
+        return _table[symtable[_scanner.tokenValue()].first];
     }else if(token == NUMBER){
       return new Number(_scanner.tokenValue());
     }else if(token == ATOM || token == ATOMSC){
@@ -164,55 +166,6 @@ public:
     return _expStack.top();
   }
 
-  // string match_context( Exp* root ){
-  //   MatchExp *match_exp = root;
-  //   Variable *var = dynamic_cast<Variable*>(match_exp->_left);
-  //   if(var){
-  //     Term *term = dynamic_cast<Term*>(match_exp->_right);
-  //     rel = var->symbol() + " = " + term->symbol();
-  //     if(Variable *var = dynamic_cast<Variable*>(match_exp->_right))rel = "true";
-  //   }
-  // }
-
-  string result(){
-    Exp* root = _expStack.top();
-    if(root->evaluate() == false)
-      return "false.";
-    else{
-
-      MatchExp *exp = dynamic_cast<MatchExp*>(root); //if only one matching
-      if(exp){
-        Variable *var = dynamic_cast<Variable*>(exp->_left);
-        //std::cout << exp << "\n";
-        if(var){
-          Term *term = dynamic_cast<Term*>(exp->_right);
-          //std::cout << var->symbol() << "\n";
-          rel = var->symbol() + " = " + term->symbol();
-          if(Variable *var = dynamic_cast<Variable*>(exp->_right))rel = "true";
-        }
-      }
-
-      // else{
-      //   match_context(root->_left);
-      //   MatchExp *exp = dynamic_cast<MatchExp*>(root->_right);
-      //   rel = rel + ", " ;
-      //   while(!exp ){
-      //     root = root->_right;
-      //     exp = dynamic_cast<MatchExp*>(root->_right)
-      //   }
-      //   match_context(root->_right);
-
-      // }
-
-
-
-      rel += ".";
-      return rel;
-    }
-    return "";
-    
-  }
-
 private:
   FRIEND_TEST(ParserTest, createArgs);
   FRIEND_TEST(ParserTest,ListOfTermsEmpty);
@@ -231,11 +184,11 @@ private:
     }
   }
 
-  std::string rel ;
   vector<Term *> _terms;
   Scanner _scanner;
   int _currentToken;
   //MatchExp* _root;
   stack<Exp*> _expStack;
+  map<string,Variable*> _table;
 };
 #endif

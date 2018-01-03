@@ -55,22 +55,27 @@ public:
   ListIterator(List *list): _index(0), _list(list) {}
 
   void first() {
-    _index = 0;
+    _list2 = _list;
   }
 
   Term* currentItem() const {
-    return _list->args(_index);
+    return _list2->head();
   }
 
   bool isDone() const {
-    return _index >= _list->arity();
+    if( _list2->tail()->symbol() == "[]" )
+      return true ;
+    return false ;  
   }
 
   void next() {
-    _index++;
+    
+    if(!isDone())
+      _list2 = dynamic_cast<List*>( _list2->tail());
   }
 private:
   int _index;
   List* _list;
+  List* _list2;
 };
 #endif

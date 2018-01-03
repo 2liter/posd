@@ -40,6 +40,9 @@
         "list": "cpp",
         "deque": "cpp",
         "queue": "cpp",
-        "stack": "cpp"
+        "stack": "cpp",
+        "map": "cpp",
+        "xtree": "cpp",
+        "tuple": "cpp"
     }
 }

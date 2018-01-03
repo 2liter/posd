@@ -26,7 +26,7 @@ struct.o:struct.cpp struct.h
 #mainExp.o: mainExp.cpp exp.h global.h
 #	g++ -std=gnu++0x -c mainExp.cpp
 
-hw8: mainScanner.o atom.o list.o struct.o scanner.h utScanner.h utParser.h parser.h
+hw8: mainScanner.o atom.o list.o struct.o scanner.h parser.h
 ifeq (${OS}, Windows_NT)
 	g++ -o hw8 mainScanner.o atom.o list.o struct.o -lgtest
 else
@@ -58,6 +58,6 @@ mainIterator.o: mainIterator.cpp utIterator.h
 #list.o: list.h list.cpp term.h var.h
 #	g++ -std=gnu++0x -c list.cpp
 clean:
-	rm -f *.o madRace utAtom utVariable utScanner
+	rm -f *.o madRace utAtom utVariable utScanner utIterator hw8
 stat:
 	wc *.h *.cpp

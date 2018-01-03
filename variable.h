@@ -29,6 +29,10 @@ public:
   Variable* getVariable() {
     return this;
   }
+
+  Term* getValue() {
+    return _instance;
+  }
 private:
   Term * _instance;
 };
