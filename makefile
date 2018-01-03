@@ -1,5 +1,5 @@
-all: madRace utAtom utVariable utScanner utIterator hw8
-
+all:  hw8 shell
+#madRace utAtom utVariable utScanner utIterator
 madRace: mainMadRace.o
 	g++ -o madRace mainMadRace.o -lgtest -lpthread
 mainMadRace.o: mainMadRace.cpp madRace.h utMadRace.h
@@ -25,6 +25,18 @@ struct.o:struct.cpp struct.h
 #	g++ -o exp mainExp.o -lgtest -lpthread
 #mainExp.o: mainExp.cpp exp.h global.h
 #	g++ -std=gnu++0x -c mainExp.cpp
+
+
+shell.o: shell.cpp scanner.h  atom.h struct.h variable.h parser.h exp.h
+	g++ -std=gnu++0x -c shell.cpp
+
+shell: shell.o atom.o list.o struct.o scanner.h parser.h
+ifeq (${OS}, Windows_NT)
+	g++ -o shell shell.o atom.o list.o struct.o -lgtest
+else
+	g++ -o shell shell.o atom.o list.o struct.o -lgtest -lpthread
+endif
+
 
 hw8: mainScanner.o atom.o list.o struct.o scanner.h parser.h
 ifeq (${OS}, Windows_NT)

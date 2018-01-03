@@ -226,22 +226,22 @@ TEST(Shell, conjunctionMatching_trueAndExp) {
   }
 }
 
-// TEST(Shell, conjunctionMatching_expAndtrue) {
-//   Scanner s("Y=1, X=X.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     p.getExpressionTree()->evaluate();
-//     string result = p.getExpressionTree()->getEvaluateString() + "." ;
-//      /**
-//      *  maybe your implementation here.
-//      */
+TEST(Shell, conjunctionMatching_expAndtrue) {
+  Scanner s("Y=1, X=X.");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    p.getExpressionTree()->evaluate();
+    string result =  p.getExpressionTree()->getRet() + "." ;
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("Y = 1.", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("Y = 1.", result);
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
 TEST(Shell, conjunctionMatching_trueAndfalse) {
   Scanner s("X=X, 1=2.");
@@ -297,21 +297,22 @@ TEST(Shell, conjunctionMatching_falseAndfalse) {
   }
 }
 
-// TEST(Shell, conjunctionMatching_duplicateExp) {
-//   Scanner s("Y=1, X=2, X=2.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-    
-//      /**
-//      *  maybe your implementation here.
-//      */
+TEST(Shell, conjunctionMatching_duplicateExp) {
+  Scanner s("Y=1, X=2, X=2.");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    p.getExpressionTree()->evaluate();
+    string result =  p.getExpressionTree()->getRet() + "." ;
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("Y = 1, X = 2.", result);
-//   } catch (std::string &msg) { 
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("Y = 1, X = 2.", result);
+  } catch (std::string &msg) { 
+    FAIL() << msg;
+  }
+}
 
 TEST(Shell, disjunctionMatching1) {
   Scanner s("X=1; X=2.");
@@ -330,22 +331,22 @@ TEST(Shell, disjunctionMatching1) {
   }
 }
 
-// TEST(Shell, disjunctionMatching2) {
-//   Scanner s("X=1; X=1, X=2.");
-//   Parser p(s);
-//   try {
-//     p.buildExpression();
-//     p.getExpressionTree()->evaluate();
-//     string result = p.getExpressionTree()->getEvaluateString() + "." ;
-//      /**
-//      *  maybe your implementation here.
-//      */
+TEST(Shell, disjunctionMatching2) {
+  Scanner s("X=1; X=1, X=2.");
+  Parser p(s);
+  try {
+    p.buildExpression();
+    p.getExpressionTree()->evaluate();
+    string result = p.getExpressionTree()->getEvaluateString() + "." ;
+     /**
+     *  maybe your implementation here.
+     */
 
-//     ASSERT_EQ("X = 1.", result);
-//   } catch (std::string &msg) {
-//     FAIL() << msg;
-//   }
-// }
+    ASSERT_EQ("X = 1.", result);
+  } catch (std::string &msg) {
+    FAIL() << msg;
+  }
+}
 
 TEST(Shell, disjunctionMatching3) {
   Scanner s("X=1; X=1, Y=2.");
