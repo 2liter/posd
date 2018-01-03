@@ -21,7 +21,8 @@ TEST(Shell, varMatchAtomSuc) {
   Parser p(s);
   try{
     p.buildExpression();
-    string result = p.getExpressionTree()->getEvaluateString()+"." ;
+    p.getExpressionTree()->evaluate();
+    string result = p.getExpressionTree()->getRet()+"." ;
     
      /**
      *  maybe your implementation here.

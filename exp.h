@@ -31,21 +31,25 @@ public:
   }
 
   bool evaluate(){
-    bool result = _left->match(*_right);
-    // ret = ret + _left->symbol() + " = " + _right->value() ;
 
+    // ret = ret + _left->symbol() + " = " + _right->value() ;
+    bool result ; 
     Variable  *var = _left->getVariable();
     Variable  *var_r = _right->getVariable();
-    if(var == var_r) return result;
+    if((var == var_r) && var != nullptr ) return true;
     if(var &&( _table.find(var->symbol())== _table.end() ) ) {
       _table.insert(pair<string,Variable*>(var->symbol(),var));
       ret = ret + _left->symbol() + " = " + _right->value() ;
     }  
-    
+    result = _left->match(*_right);
     return result;
   }
   string getEvaluateString(){
     return _left->symbol() + " = " + _right->value() ;
+  }
+
+  string getRet(){
+    return ret;
   }
   
 private:
