@@ -18,7 +18,6 @@ int main( int argc , char **argv )
     while(input != "halt."){
 
         if(input[input.length()-1 ] == '.'){
-
         }
         else{
             while( input[input.length()-1 ] != '.'){
@@ -29,12 +28,16 @@ int main( int argc , char **argv )
             }
             result_str  = result_str + input;
         }
+        
         Scanner s(result_str);
-
         Parser p(s);
         p.buildExpression();
-        p.getExpressionTree()->evaluate();
-        string result = p.getExpressionTree()->getEvaluateString() + "." ;
+        string result = "";
+
+        if(! p.getExpressionTree()->evaluate() ) result = "false."
+        else result = p.getExpressionTree()->getEvaluateString() + "." ;
+        if(result == "." ) result = "true."
+
         std::cout << result + "\n";
         result_str = "";
         std::cout << "?-" ;

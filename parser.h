@@ -101,7 +101,9 @@ public:
 
   void restDisjunctionMatch() {
     if (_scanner.currentChar() == ';') {
+
       createTerm();
+      _table.clear();
       disjunctionMatch();
       Exp *right = _expStack.top();
       _expStack.pop();
@@ -164,6 +166,9 @@ public:
 
   Exp* getExpressionTree(){
     return _expStack.top();
+  }
+  void* clearParserMap(){
+    _table.clear();
   }
 
 private:
