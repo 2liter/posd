@@ -198,13 +198,12 @@ TEST(Shell, conjunctionMatching_true) {
     p.buildExpression();
     string result = "false.";
     p.getExpressionTree()->evaluate();
-    if(p.getExpressionTree()->getEvaluateString() == "")
-      result = "true";
+    result =  p.getExpressionTree()->getEvaluateString() + "." ;
      /**
      *  maybe your implementation here.
      */
 
-    ASSERT_EQ("true.",  result + ".");
+    ASSERT_EQ("true.",  result );
   } catch (std::string &msg) {
     FAIL() << msg;
   }

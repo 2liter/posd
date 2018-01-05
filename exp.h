@@ -31,13 +31,6 @@ public:
   bool evaluate(){
 
     bool result ; 
-    // Variable  *var = _left->getVariable();
-    // Variable  *var_r = _right->getVariable();
-    // if((var == var_r) && var != nullptr ) return true;
-    // if(var &&( _table.find(var->symbol())== _table.end() ) ) {
-    //   _table.insert(pair<string,Variable*>(var->symbol(),var));
-    //   ret = ret + _left->symbol() + " = " + _right->value() ;
-    // }  
     result = _left->match(*_right);
     ret = result; 
     return result;
@@ -83,7 +76,7 @@ public:
     if(left != "")left = left + ", ";
     right = _right->getEvaluateString();
     if(right == "" && left != "" ) left = left.substr(0,left.length()-2);
-    //std::cout << left << right <<"\n";
+    if( (left +  right) == "" ) return "true";
     return (left +  right);
   }
 
@@ -115,12 +108,13 @@ public:
     string left = "",right = "",last = "";
     left = _left->getEvaluateString();
     if(_left->getRet() == false) left = "";
+    else if(left == "")left = "true";
+    
     if(left != "")left = left + "; ";
     _table.clear();
     right = _right->getEvaluateString();
     if(_right->getRet() == false) right = "";
     if(right == "" && left != "" ) left = left.substr(0,left.length()-2);
-    //std::cout << left << right <<"\n";
     return (left +  right);
   }
 

@@ -31,14 +31,20 @@ int main( int argc , char **argv )
         
         Scanner s(result_str);
         Parser p(s);
-        p.buildExpression();
-        string result = "";
+        try {
+            p.buildExpression();
+            string result = "";
 
-        if(! p.getExpressionTree()->evaluate() ) result = "false."
-        else result = p.getExpressionTree()->getEvaluateString() + "." ;
-        if(result == "." ) result = "true."
+            if(! p.getExpressionTree()->evaluate() ) result = "false.";
+            else result = p.getExpressionTree()->getEvaluateString() + "." ;
+            if(result == "." ) result = "true.";
 
-        std::cout << result + "\n";
+            std::cout << result <<"\n";
+
+        } catch (std::string &msg) {
+            std::cout <<  msg << "\n";
+        }
+
         result_str = "";
         std::cout << "?-" ;
         getline(cin,input); 
